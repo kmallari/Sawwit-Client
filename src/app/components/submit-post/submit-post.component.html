@@ -1,0 +1,42 @@
+<div class="container mt-5 pt-lg-5">
+  <div class="card p-5">
+    <form [formGroup]="createPostForm" (ngSubmit)="createPost(createPostForm)">
+      <div class="mb-3">
+        <textarea
+          autosize
+          maxlength="300"
+          class="form-control title"
+          placeholder="Title"
+          formControlName="title"
+        ></textarea>
+      </div>
+      <div class="mb-3">
+        <textarea
+          autosize
+          class="form-control body"
+          placeholder="Body (optional)"
+          formControlName="content"
+        ></textarea>
+      </div>
+
+      <!-- IDEALLY CHANGE TO A DROPDOWN + SEARCH -->
+      <div class="w-100 d-flex justify-content-between gap-5">
+        <input
+          class="form-control"
+          type="search"
+          placeholder="Subreddit to post..."
+          aria-label="Search"
+          formControlName="subreddit"
+        />
+        <!-- 'wag ilagay yung routerlin sa button -->
+        <button
+          type="submit"
+          class="btn ml-5"
+          routerLink="/s/{{ createPostForm.value.subreddit }}/{{ postId }}"
+        >
+          Post
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

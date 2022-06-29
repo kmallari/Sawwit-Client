@@ -1,0 +1,71 @@
+label {
+  color: var(--dark-secondary);
+}
+
+.form-container {
+  color: var(--dark-primary);
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  transform: scale(0.8);
+  padding: 5em;
+}
+
+h3,
+p {
+  color: var(--light-primary);
+}
+
+h3 {
+  font-weight: bold;
+}
+
+.container {
+  background-color: var(--dark-secondary);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin-top: 4em;
+}
+
+.btn {
+  padding: 1.2em;
+  border-radius: 100em;
+}
+
+.btn-primary:hover {
+  background-color: rgb(0, 132, 255);
+  border: 1px solid rgb(0, 132, 255);
+}
+
+.close {
+  color: var(--light-primary);
+  font-size: 2em;
+  cursor: pointer;
+  background: none;
+  border: none;
+  position: absolute;
+  top: 0.2em;
+  right: 0.4em;
+  padding: 1em;
+}
+
+.close:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.login-message {
+  margin-top: 1.6em;
+}
+
+.open-login {
+  color: rgb(0, 132, 255);
+  font-weight: bold;
+  cursor: pointer;
+}

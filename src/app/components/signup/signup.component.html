@@ -1,0 +1,53 @@
+<div
+  class="rounded-3 container form-container"
+>
+  <button class="close" data-bs-dismiss="modal">
+    <i class="bi bi-x"></i>
+  </button>
+  <h3>Sign up.</h3>
+  <p>Signup to start using sawwit.</p>
+  <form [formGroup]="signupForm" (ngSubmit)="signupUser(signupForm)">
+    <div class="form-floating">
+      <input
+        type="email"
+        class="form-control"
+        id="floatingInput"
+        placeholder="name@example.com"
+        formControlName="email"
+      />
+      <label for="floatingInput">EMAIL</label>
+    </div>
+    <div class="form-floating">
+      <input
+        type="text"
+        class="form-control"
+        id="floatingInput"
+        placeholder="name@example.com"
+        formControlName="username"
+      />
+      <label for="floatingInput">USERNAME</label>
+    </div>
+    <div class="form-floating">
+      <input
+        type="password"
+        class="form-control"
+        id="floatingPassword"
+        placeholder="Password"
+        formControlName="password"
+      />
+      <label for="floatingPassword">PASSWORD</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+  </form>
+  <p class="login-message">
+    Already have an account?
+    <span
+      class="open-login"
+      data-bs-dismiss="modal"
+      data-bs-toggle="modal"
+      data-bs-target="#loginModal"
+      >LOG IN</span
+    >
+  </p>
+</div>

@@ -88,29 +88,6 @@ a:hover {
   color: var(--light-primary);
 }
 
-
-
-.post-body {
-  font-size: 1em;
-  line-height: 1.8em;
-  overflow-y: hidden;
-  background-color: var(--light-secondary);
-  font-weight: 500;
-  /* Create the gradient. */
-  background-image: linear-gradient(to bottom, #00000000, var(--dark-primary));
-
-  /* Set the background size and repeat properties. */
-  background-size: 100%;
-  background-repeat: repeat;
-
-  /* Use the text as a mask for the background. */
-  /* This will show the gradient as a text color rather than element bg. */
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
-}
-
 .vote-count {
   letter-spacing: 0.1em;
   font-weight: 600;
@@ -128,17 +105,34 @@ a:hover {
   background-color: var(--dark-hover);
 }
 
-.bi-arrow-up,
-.bi-arrow-down {
+.bi-caret-up-fill,
+.bi-caret-down-fill {
   padding: 0.2em 0.4em;
   border-radius: 0.2em;
+  background-color: var(--dark-secondary);
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
 }
 
-.bi-arrow-up:hover,
-.bi-arrow-down:hover {
+.bi-caret-up-fill:hover,
+.bi-caret-down-fill:hover {
   background-color: var(--dark-hover);
 }
 
 .subreddit-name:hover {
-  color: var(--primary)
-} 
+  color: var(--primary);
+}
+
+.bi {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture {
+  max-height: 20px;
+  max-width: 20px;
+}
+
+.booody {
+  margin-top: 8em;
+}

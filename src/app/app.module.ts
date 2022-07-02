@@ -5,8 +5,8 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarLeftComponent } from './components/sidebar-left/sidebar-left.component';
 import { SidebarRightComponent } from './components/sidebar-right/sidebar-right.component';
-import { LoginComponent } from './components/login/login.component';
-import { SignupComponent } from './components/signup/signup.component';
+// import { LoginComponent } from './components/login/login.component';
+// import { SignupComponent } from './components/signup/signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PostsListComponent } from './components/posts-list/posts-list.component';
@@ -17,16 +17,19 @@ import { AutosizeModule } from 'ngx-autosize';
 import { PostComponent } from './components/post/post.component';
 import { SubredditComponent } from './components/subreddit/subreddit.component';
 import { UserComponent } from './components/user/user.component';
-// import { QuillModule } from 'ngx-quill';
-
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CommentsContainerComponent } from './components/comments-container/comments-container.component';
+import { CommentComponent } from './components/comment/comment.component';
+import { AuthModule } from './auth/auth/auth.module';
+import { CookieService } from 'ngx-cookie-service';
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     SidebarLeftComponent,
     SidebarRightComponent,
-    LoginComponent,
-    SignupComponent,
+    // LoginComponent,
+    // SignupComponent,
     PostsListComponent,
     PostCardComponent,
     FeedContainerComponent,
@@ -34,6 +37,8 @@ import { UserComponent } from './components/user/user.component';
     PostComponent,
     SubredditComponent,
     UserComponent,
+    CommentsContainerComponent,
+    CommentComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,9 +46,10 @@ import { UserComponent } from './components/user/user.component';
     ReactiveFormsModule,
     HttpClientModule,
     AutosizeModule,
-    // QuillModule.forRoot(),
+    CKEditorModule,
+    AuthModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

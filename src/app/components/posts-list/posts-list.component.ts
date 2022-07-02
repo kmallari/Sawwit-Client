@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PostsService } from '../../services/posts.service';
 import { Post } from '../../models/post.model';
 @Component({
@@ -7,17 +7,8 @@ import { Post } from '../../models/post.model';
   styleUrls: ['./posts-list.component.css'],
 })
 export class PostsListComponent implements OnInit {
-  posts: Post[] = [];
+  @Input() posts: Post[] = [];
   constructor(private postsService: PostsService) {}
 
-  ngOnInit(): void {
-    this.getAllPosts();
-  }
-
-  getAllPosts(): void {
-    this.postsService.getAllPosts().subscribe((posts) => {
-      this.posts = posts;
-      console.log("THIS POSTS", this.posts)
-    });
-  }
+  ngOnInit(): void {}
 }

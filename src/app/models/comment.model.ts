@@ -1,12 +1,13 @@
-export interface Post {
+export interface Comment {
   id: string;
   userId: string;
   username: string;
-  title: string;
+  postId: string;
+  parentId: string;
   body: string;
-  subreddit: string;
   createdAt: number;
+  level: number;
   upvotes: number;
   downvotes: number;
-  commentsCount: number;
+  childrenCount: number;
 }

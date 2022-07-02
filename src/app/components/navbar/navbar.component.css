@@ -107,5 +107,55 @@ nav {
 }
 
 .modal-content {
-  background-color: rgba(255, 255, 255, 0)
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.dropdown-menu.show {
+  position: absolute;
+}
+
+.navbar {
+  backdrop-filter: blur(2px);
+  background-color: rgba(37, 37, 37, 0.4);
+}
+
+.list-container {
+  list-style: none;
+  padding: 0;
+  border-radius: 0.4em;
+  margin: 0;
+  background-color: rgb(48, 48, 48, 0.9);
+  border: 1px solid var(--dark-hover);
+}
+
+.search-result-box {
+  max-height: 400px;
+  overflow: auto;
+  box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.search-result {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.search-result:nth-child(2n + 2) {
+  background-color: rgb(56, 56, 56, 0.9);
+}
+
+.search-result:hover {
+  background-color: var(--dark-hover);
+}
+
+.subreddit-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.8em;
+  margin-left: 2em;
+}
+
+.border-primary {
+  border: 1px solid var(--primary);
 }

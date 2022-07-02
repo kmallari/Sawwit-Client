@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { User, RegisteredUser, LoginUser } from '../models/user.model';
-import { catchError, map, tap } from 'rxjs/operators';
+import { SubredditsService } from './subreddits.service';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Post } from '../models/post.model';
+import { Subreddit } from '../models/subreddit.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +15,10 @@ export class PostsService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private subredditsService: SubredditsService
+  ) {}
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
@@ -30,7 +35,7 @@ export class PostsService {
     };
   }
 
-  getAllPosts(): Observable<any> {
+  getAllPosts(): Observable<Post[]> {
     return this.http.get<Post>(this.url).pipe(
       tap((_) => {
         console.log(_);
@@ -39,14 +44,41 @@ export class PostsService {
     );
   }
 
+  getSubredditPosts(subredditName: string): Observable<Post[]> {
+    // is this legal??
+    return this.http
+      .get<Subreddit>('http://localhost:8080/subreddits/' + subredditName)
+      .pipe(
+        switchMap((subreddit) => {
+          const subredditName = subreddit.name;
+          return this.http
+            .get<Post[]>(this.url + '/subreddit/' + subredditName)
+            .pipe(
+              tap((_) => {
+                console.log(_);
+              }),
+              catchError(this.handleError<any>('getSubredditPosts'))
+            );
+        })
+      );
+  }
+
+  getUserPosts(userId: string): Observable<Post[]> {
+    return this.http.get<Post[]>(this.url + '/user/' + userId).pipe(
+      tap((_) => {
+        console.log(_);
+      }),
+      catchError(this.handleError<any>('getUserPosts'))
+    );
+  }
+
   createPost(
     title: string,
     content: string,
     userId: string,
     username: string,
-    subredditId: string,
     subreddit: string
-  ): Observable<any> {
+  ): Observable<Post> {
     return this.http
       .post<Post>(
         this.url + '/submit',
@@ -55,7 +87,6 @@ export class PostsService {
           body: content,
           userId: userId,
           username: username,
-          subredditId: subredditId,
           subreddit: subreddit,
         },
         this.httpOptions
@@ -68,15 +99,12 @@ export class PostsService {
       );
   }
 
-  getPost(id: string): Observable<any> {
-    return this.http
-      .get<Post>(this.url + '/' + id)
-      .pipe(
-        tap((_) => {
-          console.log(_);
-        }),
-        catchError(this.handleError<any>('getPost'))
-      );
+  getPost(id: string): Observable<Post> {
+    return this.http.get<Post>(this.url + '/' + id).pipe(
+      tap((_) => {
+        console.log(_);
+      }),
+      catchError(this.handleError<any>('getPost'))
+    );
   }
-  
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Subreddit } from '../models/subreddit.model';
 
 @Injectable({
   providedIn: 'root',
@@ -28,12 +29,42 @@ export class SubredditsService {
     };
   }
 
-  getSubredditInfo(id: string): Observable<any> {
-    return this.http.get(this.url + '/' + id, this.httpOptions).pipe(
-      tap((_) => {
-        console.log('TAP', _);
-      }),
-      catchError(this.handleError<any>('getSubredditInfo'))
-    );
+  getSubredditInfo(name: string): Observable<Subreddit> {
+    return this.http
+      .get<Subreddit>(this.url + '/' + name, this.httpOptions)
+      .pipe(
+        tap((_) => {
+          console.log('TAP', _);
+        }),
+        catchError(this.handleError<any>('getSubredditInfo'))
+      );
+  }
+
+  getSubredditInfoFromName(name: string): Observable<Subreddit> {
+    return this.http
+      .get<Subreddit>(this.url + '/' + 'name/' + name, this.httpOptions)
+      .pipe(
+        tap((_) => {
+          console.log('TAP', _);
+        }),
+        catchError(this.handleError<any>('getSubredditInfoFromName'))
+      );
+  }
+
+  searchSubreddit(name: string): Observable<Subreddit[]> {
+    if (!name.trim()) {
+      return of([]);
+    }
+    return this.http
+      .get<Subreddit[]>(
+        this.url + `/search?searchTerm=${name}`,
+        this.httpOptions
+      )
+      .pipe(
+        tap((_) => {
+          console.log('TAP', _);
+        }),
+        catchError(this.handleError<any>('searchSubreddit'))
+      );
   }
 }

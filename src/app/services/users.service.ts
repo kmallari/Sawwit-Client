@@ -16,14 +16,14 @@ export class UsersService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
+      console.error('3', error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
       // this.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
 
-// add error handling here
+      // add error handling here
 
       return of(result as T);
     };
@@ -33,7 +33,8 @@ export class UsersService {
     email: string,
     username: string,
     password: string
-  ): Observable<RegisteredUser> { // expected yung return ng server
+  ): Observable<RegisteredUser> {
+    // expected yung return ng server
     return this.http
       .post<RegisteredUser>( // tama yung type nito
         this.url + '/register',
@@ -47,9 +48,9 @@ export class UsersService {
       .pipe(
         tap((_) => {
           console.log('TAP', _);
-        }),
+        })
         // if dito lang sa service yung error handling, mahirap itransfer sa ui yung error
-        catchError(this.handleError<RegisteredUser>('register'))
+        // catchError(this.handleError<RegisteredUser>('register'))
       );
   }
 
@@ -66,5 +67,14 @@ export class UsersService {
         }),
         catchError(this.handleError<LoginUser>('login'))
       );
+  }
+
+  getUserInfo(id: string): Observable<User> {
+    return this.http.get<User>(this.url + '/' + id).pipe(
+      tap((_) => {
+        console.log('TAP', _);
+      }),
+      catchError(this.handleError<User>('getUserInfo'))
+    );
   }
 }

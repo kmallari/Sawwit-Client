@@ -1,0 +1,13 @@
+<div class="card p-4" *ngIf="comments">
+  <ul>
+    <!-- ilagay yung next level comments dito rin  -->
+    <!-- problem; kailan lang isort properly -->
+    <!-- pl padding left -->
+    <li *ngFor="let comment of comments" class="mb-4">
+      <app-comment
+        [comment]="comment"
+        (onGetNextComments)="getNextComments($event)"
+      ></app-comment>
+    </li>
+  </ul>
+</div>

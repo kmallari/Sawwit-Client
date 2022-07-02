@@ -5,6 +5,7 @@ import { User, RegisteredUser, LoginUser } from '../models/user.model';
 import { SubredditsService } from './subreddits.service';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Post } from '../models/post.model';
+import { Comment } from '../models/comment.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,8 +32,8 @@ export class CommentsService {
     };
   }
 
-  getPostComments(postId: string): Observable<any> {
-    return this.http.get<any>(this.url + postId + '/comments').pipe(
+  getPostComments(postId: string): Observable<Comment> {
+    return this.http.get<Comment>(this.url + postId + '/comments').pipe(
       tap((_) => {
         console.log(_);
       }),
@@ -40,15 +41,43 @@ export class CommentsService {
     );
   }
 
-  getNextComments(postId: string, parentId: string): Observable<any> {
-    console.log('DOESS THIS RUN?');
+  getNextComments(postId: string, parentId: string): Observable<Comment[]> {
     return this.http
-      .get<any>(this.url + postId + '/comments/next' + `?parentId=${parentId}`)
+      .get<Comment[]>(
+        this.url + postId + '/comments/next' + `?parentId=${parentId}`
+      )
       .pipe(
         tap((_) => {
           console.log(_);
         }),
         catchError(this.handleError<any>('getNextLevelComments'))
+      );
+  }
+
+  createComment(
+    userId: string,
+    username: string,
+    parentId: string,
+    comment: string,
+    postId: string,
+    parentLevel: number
+  ): Observable<Comment> {
+    return this.http
+      .post<Comment>(
+        this.url + postId + '/comments?parentLevel=' + parentLevel,
+        {
+          userId: userId,
+          username: username,
+          parentId: parentId,
+          comment: comment,
+        },
+        this.httpOptions
+      )
+      .pipe(
+        tap((_) => {
+          console.log('COMMENT TAP', _);
+        }),
+        catchError(this.handleError<Comment>('createComment'))
       );
   }
 }

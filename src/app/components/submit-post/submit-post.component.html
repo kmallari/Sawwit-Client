@@ -10,7 +10,8 @@
       </h6>
     </div>
     <form [formGroup]="createPostForm" (ngSubmit)="createPost(createPostForm)">
-      <div class="mb-3">
+      <app-search-bar (onSetSubreddit)="setSubreddit($event)"></app-search-bar>
+      <div class="my-3">
         <textarea
           autosize
           [minRows]="1"
@@ -29,27 +30,7 @@
           formControlName="content"
         ></textarea>
       </div>
-      <!-- IDEALLY CHANGE TO A DROPDOWN + SEARCH -->
-
-      <div
-        class="form-control search-container d-flex flex-row align-items-center mb-4"
-      >
-        <i class="bi bi-search"></i>
-        <input
-          maxlength="20"
-          class="search-subreddit form-control"
-          type="search"
-          placeholder="Subreddit to post..."
-          aria-label="Search"
-          formControlName="subreddit"
-          #searchBox
-          (input)="search(searchBox.value)"
-        />
-        <i class="bi bi-chevron-compact-down"></i>
-      </div>
-      <!-- 'wag ilagay yung routerlink sa button -->
-
-      <button type="submit" class="btn px-5">Post</button>
+      <button type="submit" class="btn px-5 mt-4">Post</button>
     </form>
   </div>
 </div>

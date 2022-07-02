@@ -41,7 +41,7 @@ export class SignupComponent implements OnInit {
     console.log(this.isLogin);
   }
 
-  signupUser(form: FormGroup) {
+  signupUser(form: FormGroup): void {
     if (!this.isValidEmail(form.value.email)) {
       this.invalidEmail = true;
     } else {
@@ -65,10 +65,7 @@ export class SignupComponent implements OnInit {
         .subscribe((res: any) => {
           if (res.token) {
             console.log(res);
-            this._auth.setDataInCookies(
-              'userData',
-              JSON.stringify(res.data)
-            );
+            this._auth.setDataInCookies('userData', JSON.stringify(res.data));
             this._auth.setDataInCookies('token', res.token);
             this._router.navigate(['/home']);
             window.location.reload();

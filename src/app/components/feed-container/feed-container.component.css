@@ -3,7 +3,7 @@
   border: 1px solid var(--dark-secondary);
   color: var(--light-secondary);
   padding: 0.4em 1em;
-  border-radius: 0.2em;
+  border-radius: 0.4em;
   outline: none;
   cursor: text;
 }

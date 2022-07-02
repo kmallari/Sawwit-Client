@@ -1,34 +1,12 @@
 <nav class="navbar navbar-expand-lg d-flex justify-content-around fixed-top">
-  <div class="container">
-    <a class="navbar-brand d-flex flex-row align-items-center gap-2" href="">
+  <div class="container d-flex flex-row flex-nowrap gap-2">
+    <a class="navbar-brand d-flex flex-row align-items-center" href="">
       <img src="../../../assets/logo.png" class="logo" />
     </a>
 
-    <form class="form-inline my-2 my-lg-0 col-6 position-relative">
-      <input
-        class="form-control mr-sm-2 search-box"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-        #searchBox
-        (input)="search(searchBox.value)"
-      />
-      <div
-        *ngIf="searchedSubreddits.length > 0"
-        class="position-absolute w-100 search-result-box mt-2"
-      >
-        <ul class="list-container">
-          <li
-            *ngFor="let subreddit of searchedSubreddits"
-            class="search-result"
-            routerLink="/s/{{ subreddit.name }}"
-          >
-            <img src="{{ subreddit.icon }}" alt="" class="subreddit-icon" />
-            <a>s/{{ subreddit.name }}</a>
-          </li>
-        </ul>
-      </div>
-    </form>
+    <div class="col-6">
+      <app-search-bar [fromNavbar]="true"></app-search-bar>
+    </div>
 
     <ul class="navbar-nav d-flex flex-row align-items-center gap-3">
       <div class="d-none d-lg-flex flex-row gap-3" *ngIf="!isLogin">
@@ -68,7 +46,7 @@
         >
           <i *ngIf="!user || !isLogin" class="bi bi-person"></i>
           <div *ngIf="user && isLogin" class="d-flex flex-row gap-2">
-            <div>
+            <div class="d-none d-lg-block">
               {{ user.username }}
             </div>
             <img

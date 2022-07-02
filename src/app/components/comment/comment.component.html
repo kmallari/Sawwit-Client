@@ -1,20 +1,59 @@
-<div *ngIf="comment" [ngStyle]="{ 'padding-left.em': getPaddingLeft() }">
-  <div class="d-flex flex-row align-items-center mb-2">
-    <h5 class="post-body">u/{{ comment.username }}</h5>
-    <p>{{ getTimeAgo(comment.createdAt) }}</p>
+<!-- [ngStyle]="{ 'padding-left.em': getPaddingLeft() }" -->
+<div *ngIf="comment && author" class="comment-body d-flex flex-row">
+  <div *ngIf="indentations" class="d-flex flex-row">
+    <span *ngFor="let i of indentations" class="threadline mx-2 h-100"></span>
   </div>
-  <p>{{ comment.body }}</p>
-  <div class="d-flex justify-content-between align-items-center">
-    <div class="d-flex flex-row align-items-center gap-2">
-      <i class="bi bi-arrow-up"></i>
-      <span class="vote-count">{{ comment.upvotes - comment.downvotes }}</span>
-      <i class="bi bi-arrow-down"></i>
+  <div class="d-flex flex-column flex-one">
+    <div
+      class="d-flex flex-row align-items-center mb-2 gap-1 comment-heading pt-4"
+    >
+      <div class="d-flex flex-row gap-1 align-items-center">
+        <img src="{{ author.profilePicture }}" alt="" class="profile-picture" />
+        <h6 class="post-body">
+          <a routerLink="/u/{{ comment.userId }}"> u/{{ comment.username }}</a>
+        </h6>
+      </div>
+      <i class="bi bi-dot"></i>
+      <span class="time">{{ getTimeAgo(comment.createdAt) }}</span>
     </div>
+    <div class="">
+      <div class="d-flex flex-row">
+        <div class="d-flex flex-row">
+          <span class="threadline mx-2 h-100"> </span>
+        </div>
+        <div class="flex-one">
+          <p>{{ comment.body }}</p>
+          <div class="d-flex justify-content-between align-items-center pt-2">
+            <div class="d-flex flex-row align-items-center gap-2">
+              <i class="bi bi-caret-up-fill"></i>
+              <span class="vote-count">{{
+                comment.upvotes - comment.downvotes
+              }}</span>
+              <i class="bi bi-caret-down-fill"></i>
+
+              <button
+                type="button"
+                class="reply-button d-flex flex-row align-items-center gap-1"
+                (click)="toggleReply()"
+              >
+                <i class="bi bi-reply-fill"></i><span>Reply</span>
+              </button>
+            </div>
+          </div>
+          <div *ngIf="showReplyBox" class="d-flex flex-column flex-one align-items-end gap-3">
+            <textarea autosize name="" id="" class="mt-4 w-100"></textarea>
+            <button class="post-reply-btn">Post reply</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      type="button"
+      *ngIf="getNextComments && comment.childrenCount != 0 && !revealChildren"
+      (click)="getNextComments(comment.postId, comment.id)"
+      class="reveal-comments-btn"
+    >
+      Show {{ comment.childrenCount }} replies
+    </button>
   </div>
-  <button
-    *ngIf="getNextComments && comment.childrenCount != 0"
-    (click)="getNextComments(comment.postId, comment.id)"
-  >
-    Show x replies
-  </button>
 </div>

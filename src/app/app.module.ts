@@ -22,6 +22,7 @@ import { CommentsContainerComponent } from './components/comments-container/comm
 import { CommentComponent } from './components/comment/comment.component';
 import { AuthModule } from './auth/auth/auth.module';
 import { CookieService } from 'ngx-cookie-service';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +40,7 @@ import { CookieService } from 'ngx-cookie-service';
     UserComponent,
     CommentsContainerComponent,
     CommentComponent,
+    SearchBarComponent,
   ],
   imports: [
     BrowserModule,

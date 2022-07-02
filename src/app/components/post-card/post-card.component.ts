@@ -24,7 +24,7 @@ export class PostCardComponent implements OnInit {
   getSubredditInfo(id: string): void {
     this.subredditsService.getSubredditInfo(id).subscribe((data) => {
       this.subredditInfo = data;
-      console.log('INFORMATION', this.subredditInfo);
+      // console.log('INFORMATION', this.subredditInfo);
     });
   }
 

@@ -26,4 +26,21 @@ export class CommentsContainerComponent implements OnInit {
         this.comments.splice(parentIndex + 1, 0, ...comments);
       });
   }
+
+  createComment(comment: Comment): void {
+    if (comment) {
+      this.commentsService
+        .createComment(
+          comment.userId,
+          comment.username,
+          comment.parentId,
+          comment.body,
+          comment.postId,
+          comment.level
+        )
+        .subscribe((comment) => {
+          console.log(comment);
+        });
+    }
+  }
 }

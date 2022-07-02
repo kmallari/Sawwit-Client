@@ -1,7 +1,11 @@
 <div class="card px-4" *ngIf="comments">
-  <form class="w-100 d-flex flex-column align-items-end gap-3 mt-4">
-    <button type="submit" class="post-reply-btn">Post reply</button>
-    <textarea autosize class="w-100"></textarea>
+  <form
+    class="w-100 d-flex flex-column align-items-end gap-3 mt-4 position-relative"
+  >
+  <textarea autosize class="w-100"></textarea>
+  <button type="submit" class="post-reply-btn">
+    Post reply
+  </button>
   </form>
   <ul>
     <!-- ilagay yung next level comments dito rin  -->

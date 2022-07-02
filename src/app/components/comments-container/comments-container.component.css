@@ -32,5 +32,11 @@ textarea {
   font-size: small;
   padding: 0.4em 1em;
   border-radius: 0.4em;
-  
+  bottom: 1em;
+  right: 1em;
+  transition: all 0.1s ease-in-out;
+}
+
+.post-reply-btn:hover {
+  background-color: rgb(238, 28, 63);
 }

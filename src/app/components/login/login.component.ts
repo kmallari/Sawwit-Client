@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     this.usersService
       .login(form.value.loginInfo, form.value.password)
       .subscribe((res: any) => {
-        console.log('RESULT: ', res.token);
+        // console.log('RESULT: ', res.token);
         if (res.token) {
           this._auth.setDataInCookies(
             'userData',

@@ -45,10 +45,7 @@ p,
 }
 
 .threadline {
-  content: "";
   border-right: 2px solid var(--dark-hover);
-  display: block;
-  height: 200%;
 }
 
 .reply-button {
@@ -77,6 +74,7 @@ textarea {
   box-shadow: none;
   outline: none;
   border-radius: 0.4em;
+  transition: all 0.1s ease-in-out;
 }
 
 .flex-one {
@@ -96,5 +94,17 @@ textarea {
   font-size: small;
   padding: 0.4em 1em;
   border-radius: 0.4em;
-  
+}
+
+p {
+  cursor: text;
+}
+
+textarea:focus {
+  box-shadow: 0 0 0 0.1em var(--secondary);
+}
+
+a:hover{
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }

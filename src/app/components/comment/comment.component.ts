@@ -12,6 +12,7 @@ import * as moment from 'moment';
 export class CommentComponent implements OnInit {
   @Input() comment: Comment | null = null;
   @Output() onGetNextComments: EventEmitter<any> = new EventEmitter();
+  @Output() onCreateComment: EventEmitter<any> = new EventEmitter();
   author?: User;
   revealChildren: boolean = false;
   indentations: number[] = [];
@@ -44,6 +45,14 @@ export class CommentComponent implements OnInit {
 
   toggleReply(): void {
     this.showReplyBox = !this.showReplyBox;
+  }
+
+  onCreateNestedComment(event: Event) {
+    this.onCreateComment.emit(event);
+  }
+
+  onClick(): void {
+    if (this.comment) console.log('comment', this.comment);
   }
 
   ngOnInit(): void {

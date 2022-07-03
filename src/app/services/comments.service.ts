@@ -35,7 +35,7 @@ export class CommentsService {
   getPostComments(postId: string): Observable<Comment> {
     return this.http.get<Comment>(this.url + postId + '/comments').pipe(
       tap((_) => {
-        console.log(_);
+        // console.log(_);
       }),
       catchError(this.handleError<any>('getPostComments'))
     );
@@ -48,7 +48,7 @@ export class CommentsService {
       )
       .pipe(
         tap((_) => {
-          console.log(_);
+          // console.log(_);
         }),
         catchError(this.handleError<any>('getNextLevelComments'))
       );

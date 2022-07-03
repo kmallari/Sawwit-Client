@@ -7,11 +7,9 @@ import {
 } from '@angular/forms';
 import { PostsService } from 'src/app/services/posts.service';
 import { Router } from '@angular/router';
-import { SubredditsService } from 'src/app/services/subreddits.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user.model';
 import { Subreddit } from 'src/app/models/subreddit.model';
-import { formatCurrency } from '@angular/common';
 
 @Component({
   selector: 'app-submit-post',

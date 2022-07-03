@@ -38,7 +38,7 @@ export class PostsService {
   getAllPosts(): Observable<Post[]> {
     return this.http.get<Post>(this.url).pipe(
       tap((_) => {
-        console.log(_);
+        // console.log(_);
       }),
       catchError(this.handleError<any>('getAllPosts'))
     );
@@ -55,7 +55,7 @@ export class PostsService {
             .get<Post[]>(this.url + '/subreddit/' + subredditName)
             .pipe(
               tap((_) => {
-                console.log(_);
+                // console.log(_);
               }),
               catchError(this.handleError<any>('getSubredditPosts'))
             );
@@ -66,7 +66,7 @@ export class PostsService {
   getUserPosts(userId: string): Observable<Post[]> {
     return this.http.get<Post[]>(this.url + '/user/' + userId).pipe(
       tap((_) => {
-        console.log(_);
+        // console.log(_);
       }),
       catchError(this.handleError<any>('getUserPosts'))
     );
@@ -93,7 +93,7 @@ export class PostsService {
       )
       .pipe(
         tap((_) => {
-          console.log(_);
+          // console.log(_);
         }),
         catchError(this.handleError<any>('createPost'))
       );
@@ -102,7 +102,7 @@ export class PostsService {
   getPost(id: string): Observable<Post> {
     return this.http.get<Post>(this.url + '/' + id).pipe(
       tap((_) => {
-        console.log(_);
+        // console.log(_);
       }),
       catchError(this.handleError<any>('getPost'))
     );

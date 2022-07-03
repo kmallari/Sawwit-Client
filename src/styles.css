@@ -4,7 +4,7 @@
 :root {
   --primary: #c83e4d;
   --primary-hover: #d8505e;
-  --secondary: #e59500;
+  --secondary: #449be2;
   --dark-primary: #252525;
   --dark-secondary: #333333;
   --dark-hover: #414141;
@@ -155,5 +155,9 @@ a:hover {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(245, 176, 72);
+  background: rgb(65, 107, 245);
+}
+
+textarea {
+  transition: all 0.1s ease-in-out;
 }

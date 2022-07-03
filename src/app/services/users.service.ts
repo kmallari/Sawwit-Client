@@ -47,7 +47,7 @@ export class UsersService {
       )
       .pipe(
         tap((_) => {
-          console.log('TAP', _);
+          // console.log('TAP', _);
         })
         // if dito lang sa service yung error handling, mahirap itransfer sa ui yung error
         // catchError(this.handleError<RegisteredUser>('register'))
@@ -63,7 +63,7 @@ export class UsersService {
       )
       .pipe(
         tap((_) => {
-          console.log('TAP', _);
+          // console.log('TAP', _);
         }),
         catchError(this.handleError<LoginUser>('login'))
       );
@@ -72,7 +72,7 @@ export class UsersService {
   getUserInfo(id: string): Observable<User> {
     return this.http.get<User>(this.url + '/' + id).pipe(
       tap((_) => {
-        console.log('TAP', _);
+        // console.log('TAP', _);
       }),
       catchError(this.handleError<User>('getUserInfo'))
     );

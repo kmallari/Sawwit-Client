@@ -34,7 +34,7 @@ export class SubredditsService {
       .get<Subreddit>(this.url + '/' + name, this.httpOptions)
       .pipe(
         tap((_) => {
-          console.log('TAP', _);
+          // console.log('TAP', _);
         }),
         catchError(this.handleError<any>('getSubredditInfo'))
       );
@@ -45,7 +45,7 @@ export class SubredditsService {
       .get<Subreddit>(this.url + '/' + 'name/' + name, this.httpOptions)
       .pipe(
         tap((_) => {
-          console.log('TAP', _);
+          // console.log('TAP', _);
         }),
         catchError(this.handleError<any>('getSubredditInfoFromName'))
       );
@@ -62,9 +62,21 @@ export class SubredditsService {
       )
       .pipe(
         tap((_) => {
-          console.log('TAP', _);
+          // console.log('TAP', _);
         }),
         catchError(this.handleError<any>('searchSubreddit'))
+      );
+  }
+
+  createSubreddit(name: string, description: string): Observable<Subreddit> {
+    return this.http
+      .post<Subreddit>(this.url, {
+        subredditName: name,
+        description: description,
+      })
+      .pipe(
+        tap((_) => {},
+        catchError(this.handleError<Subreddit>('createSubreddit')))
       );
   }
 }

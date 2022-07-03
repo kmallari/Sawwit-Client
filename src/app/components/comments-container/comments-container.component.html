@@ -1,20 +1,18 @@
-<div class="card px-4" *ngIf="comments">
-  <form
-    class="w-100 d-flex flex-column align-items-end gap-3 mt-4 position-relative"
-  >
-  <textarea autosize class="w-100"></textarea>
-  <button type="submit" class="post-reply-btn">
-    Post reply
-  </button>
-  </form>
+<div class="card px-4 pb-4" *ngIf="comments">
+  <app-make-comment
+    [parentId]="postId"
+    [parentLevel]="-1"
+    (onCreateComment)="createComment($event)"
+  ></app-make-comment>
+  <p *ngIf="comments.length === 0" class="mt-5 no-comments">
+    No comments yet. Be the first to comment!
+  </p>
   <ul>
-    <!-- ilagay yung next level comments dito rin  -->
-    <!-- problem; kailan lang isort properly -->
-    <!-- pl padding left -->
     <li *ngFor="let comment of comments" class="">
       <app-comment
         [comment]="comment"
         (onGetNextComments)="getNextComments($event)"
+        (onCreateComment)="createComment($event)"
       ></app-comment>
     </li>
   </ul>

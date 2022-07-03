@@ -38,7 +38,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.isUserLogin();
-    console.log(this.isLogin);
+    // console.log(this.isLogin);
   }
 
   signupUser(form: FormGroup): void {
@@ -64,13 +64,13 @@ export class SignupComponent implements OnInit {
         // sa subscribe pwede maglagay ng error handler
         .subscribe((res: any) => {
           if (res.token) {
-            console.log(res);
+            // console.log(res);
             this._auth.setDataInCookies('userData', JSON.stringify(res.data));
             this._auth.setDataInCookies('token', res.token);
             this._router.navigate(['/home']);
             window.location.reload();
           } else {
-            console.log(res);
+            // console.log(res);
             alert(res.msg);
           }
         });

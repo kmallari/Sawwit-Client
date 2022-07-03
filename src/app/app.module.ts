@@ -24,6 +24,7 @@ import { AuthModule } from './auth/auth/auth.module';
 import { CookieService } from 'ngx-cookie-service';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { MakeCommentComponent } from './components/make-comment/make-comment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +44,7 @@ import { FooterComponent } from './components/footer/footer.component';
     CommentComponent,
     SearchBarComponent,
     FooterComponent,
+    MakeCommentComponent,
   ],
   imports: [
     BrowserModule,

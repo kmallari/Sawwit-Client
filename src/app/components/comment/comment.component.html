@@ -40,9 +40,19 @@
               </button>
             </div>
           </div>
-          <div *ngIf="showReplyBox" class="d-flex flex-column flex-one align-items-end gap-3">
-            <textarea autosize name="" id="" class="mt-4 w-100"></textarea>
-            <button class="post-reply-btn">Post reply</button>
+          <div
+            *ngIf="showReplyBox"
+            class="d-flex flex-column flex-one align-items-start gap-3"
+          >
+            <app-make-comment
+              *ngIf="onCreateNestedComment"
+              [parentId]="comment.id"
+              [parentLevel]="comment.level"
+              (onCreateComment)="onCreateNestedComment($event)"
+              class="w-100"
+            ></app-make-comment>
+            <!-- <textarea autosize name="" id="" class="mt-4 w-100"></textarea>
+            <button class="post-reply-btn">Post reply</button> -->
           </div>
         </div>
       </div>

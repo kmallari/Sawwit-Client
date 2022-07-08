@@ -8,6 +8,7 @@ import {
 import { Subreddit } from 'src/app/models/subreddit.model';
 import { SubredditsService } from 'src/app/services/subreddits.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sidebar-right',
@@ -16,11 +17,13 @@ import { Router } from '@angular/router';
 })
 export class SidebarRightComponent implements OnInit {
   createSubredditForm: FormGroup;
+  isLogin: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private _subredditsService: SubredditsService,
-    private _router: Router
+    private _router: Router,
+    private _auth: AuthService
   ) {
     this.createSubredditForm = this.fb.group({
       subreddit: new FormControl('', [Validators.required]),
@@ -28,15 +31,22 @@ export class SidebarRightComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isUserLogin();
+  }
 
   createSubreddit(form: FormGroup) {
-    console.log('test?');
     this._subredditsService
       .createSubreddit(form.value.subreddit, form.value.description)
       .subscribe((res: Subreddit) => {
         console.log(res);
         this._router.navigate(['/s/' + res.name]);
       });
+  }
+
+  isUserLogin() {
+    if (this._auth.getUserDetails() != null) {
+      this.isLogin = true;
+    }
   }
 }

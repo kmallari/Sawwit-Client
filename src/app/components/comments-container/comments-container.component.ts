@@ -14,17 +14,49 @@ export class CommentsContainerComponent implements OnInit {
   constructor(private commentsService: CommentsService) {}
 
   ngOnInit(): void {
-    this.getNextComments({ postId: this.postId, parentId: this.postId });
+    this.getParentComments();
+    // after nito, this.comments = array
   }
 
-  addComments(comments: Comment[], parentId: string) {
+  addComments(comments: Comment[], parentId: string): void {
     const parentIndex = this.comments.findIndex(
       (comment) => comment.id === parentId
     );
     this.comments.splice(parentIndex + 1, 0, ...comments);
   }
 
-  getNextComments(args: { postId: string; parentId: string }): void {
+  getParentComments(): void {
+    this.commentsService
+      .getParentComments(this.postId)
+      .subscribe((comments) => {
+        this.comments = comments;
+
+        // changes the isChildrenRevealed attribute of a comment to true if
+        // the children have been revealed
+
+        const parentCommentsIds = new Set();
+        let parentId = '';
+        
+        for (let i = 0; i < this.comments.length; i++) {
+          parentId = this.comments[i].parentId;
+          parentCommentsIds.add(parentId);
+        }
+        for (let i = 0; i < this.comments.length; i++) {
+          let id = this.comments[i].id;
+          if (parentCommentsIds.has(id)) {
+            this.comments[i].isChildrenRevealed = true;
+          }
+        }
+
+      });
+  }
+
+  getNextComments(args: {
+    postId: string;
+    parentId: string;
+    isFirstRun: boolean;
+  }): void {
+    // yung parent na kinukuhanan ng subcoments, pwedeng imutate para yung revealChildren = true
     this.commentsService
       .getNextComments(args.postId, args.parentId)
       .subscribe((comments) => {

@@ -2,7 +2,9 @@
 <div class="w-100 container mt-5">
   <div class="row">
     <div class="col-12 col-lg-8 d-flex flex-column gap-4">
-      <div class="card p-4"></div>
+      <div *ngIf="isLogin" class="card p-4">
+        <app-create-post-cta></app-create-post-cta>
+      </div>
       <app-posts-list [posts]="posts"></app-posts-list>
     </div>
     <app-sidebar-right class="col d-none d-lg-inline"></app-sidebar-right>

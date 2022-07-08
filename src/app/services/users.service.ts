@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
 import { User, RegisteredUser, LoginUser } from '../models/user.model';
 import { catchError, map, tap } from 'rxjs/operators';
 @Injectable({
@@ -13,20 +17,22 @@ export class UsersService {
   };
   constructor(private http: HttpClient) {}
 
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
-      console.error('3', error); // log to console instead
+  private handleError<T>(error: HttpErrorResponse) {
+    return throwError(() => error);
 
-      // TODO: better job of transforming error for user consumption
-      // this.log(`${operation} failed: ${error.message}`);
+    // return (error: any): Observable<T> => {
+    //   // TODO: send the error to remote logging infrastructure
+    //   console.error('Catching?', error); // log to console instead
 
-      // Let the app keep running by returning an empty result.
+    //   // TODO: better job of transforming error for user consumption
+    //   // this.log(`${operation} failed: ${error.message}`);
 
-      // add error handling here
+    //   // Let the app keep running by returning an empty result.
 
-      return of(result as T);
-    };
+    //   // add error handling here
+
+    //   // return of(result as T);
+    // };
   }
 
   register(
@@ -55,6 +61,7 @@ export class UsersService {
   }
 
   login(loginInfo: string, password: string): Observable<LoginUser> {
+    // console.log('serivce', loginInfo, password);
     return this.http
       .post<LoginUser>(
         this.url + '/login',
@@ -63,9 +70,9 @@ export class UsersService {
       )
       .pipe(
         tap((_) => {
-          // console.log('TAP', _);
+          console.log('TAP', _);
         }),
-        catchError(this.handleError<LoginUser>('login'))
+        catchError(this.handleError)
       );
   }
 
@@ -74,7 +81,7 @@ export class UsersService {
       tap((_) => {
         // console.log('TAP', _);
       }),
-      catchError(this.handleError<User>('getUserInfo'))
+      catchError(this.handleError)
     );
   }
 }

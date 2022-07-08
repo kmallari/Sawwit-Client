@@ -32,13 +32,17 @@ export class CommentsService {
     };
   }
 
-  getPostComments(postId: string): Observable<Comment> {
-    return this.http.get<Comment>(this.url + postId + '/comments').pipe(
-      tap((_) => {
-        // console.log(_);
-      }),
-      catchError(this.handleError<any>('getPostComments'))
-    );
+  // getPostComments(postId: string): Observable<Comment> {
+  //   return this.http.get<Comment>(this.url + postId + '/comments').pipe(
+  //     tap((_) => {
+  //       // console.log(_);
+  //     }),
+  //     catchError(this.handleError<any>('getPostComments'))
+  //   );
+  // }
+
+  getParentComments(postId: string): Observable<Comment[]> {
+    return this.http.get<Comment[]>(this.url + postId + '/parentComments/');
   }
 
   getNextComments(postId: string, parentId: string): Observable<Comment[]> {

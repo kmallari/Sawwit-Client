@@ -9,7 +9,6 @@ import { UsersService } from 'src/app/services/users.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,7 +18,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isLogin: boolean = false;
   errorMessage: any;
-
+  invalidLogin: boolean = false;
   constructor(
     private fb: FormBuilder,
     private usersService: UsersService,
@@ -35,20 +34,31 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   loginUser(form: FormGroup) {
-    this.usersService
-      .login(form.value.loginInfo, form.value.password)
-      .subscribe((res: any) => {
-        // console.log('RESULT: ', res.token);
-        if (res.token) {
-          this._auth.setDataInCookies(
-            'userData',
-            JSON.stringify(res.data)
-          );
-          this._auth.setDataInCookies('token', res.token);
-          this._router.navigate(['']);
-          window.location.reload();
-        }
-      });
+    // mutate din yung isLogin sa _auth service dito
+    if (form.valid) {
+      this.usersService
+        .login(form.value.loginInfo, form.value.password)
+        .subscribe(
+          (res: any) => {
+            // console.log('RESULT: ', res.token);
+            console.log('res', res);
+            if (res.token) {
+              this._auth.setDataInCookies('userData', JSON.stringify(res.data));
+              this._auth.setDataInCookies('token', res.token);
+              // this._router.navigate(['']);
+              window.location.reload();
+            } else {
+              this.invalidLogin = true;
+            }
+          },
+          (err) => {
+            console.log('ERROR!', err);
+          }
+        );
+    } else {
+      console.log('no res');
+      this.invalidLogin = true;
+    }
   }
 
   isUserLogin() {
@@ -58,6 +68,7 @@ export class LoginComponent implements OnInit {
   }
 
   logout() {
+    // mutate din yung isLogin sa _auth service dito
     this._auth.clearStorage();
     this._router.navigate(['']);
   }

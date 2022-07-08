@@ -25,6 +25,9 @@
       />
       <label for="floatingPassword">PASSWORD</label>
     </div>
+    <p class="invalid-login-msg" *ngIf="invalidLogin">
+      Invalid credentials or user does not exist.
+    </p>
     <button type="submit" class="btn btn-primary">Log In</button>
   </form>
   <p class="signup-message">

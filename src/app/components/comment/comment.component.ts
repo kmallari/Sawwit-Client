@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Comment } from '../../models/comment.model';
-import { User } from 'src/app/models/user.model';
-import { UsersService } from 'src/app/services/users.service';
 import * as moment from 'moment';
 
 @Component({
@@ -13,34 +11,28 @@ export class CommentComponent implements OnInit {
   @Input() comment: Comment | null = null;
   @Output() onGetNextComments: EventEmitter<any> = new EventEmitter();
   @Output() onCreateComment: EventEmitter<any> = new EventEmitter();
-  author?: User;
-  revealChildren: boolean = false;
+  // revealChildren: boolean = false;
+  // kailangan if kukunin from cache yung data, true ito (if may children)
+  // hindi naman server data ito
+  // if kapag nag getnext comments
+
+  // kunin lahat ng parent keys sa cache
   indentations: number[] = [];
   showReplyBox: boolean = false;
 
-  constructor(private _usersService: UsersService) {}
+  constructor() {}
 
   getTimeAgo(date: number): string {
     return moment(date).fromNow();
   }
 
-  getNextComments(postId: string, parentId: string): void {
-    this.revealChildren = true;
-    this.onGetNextComments.emit({ postId, parentId });
-  }
-
-  getPaddingLeft(): number {
-    if (this.comment) {
-      return this.comment.level * 1.2;
-    } else {
-      return 0;
-    }
-  }
-
-  getUserInfo(userId: string) {
-    this._usersService.getUserInfo(userId).subscribe((user) => {
-      this.author = user;
-    });
+  getNextComments(postId: string, parentId: string, isFirstRun: boolean): void {
+    // if (this.comment) {
+    //   // DOES NOT WORK?? WHY??
+    //   this.comment.isChildrenRevealed = true;
+    // }
+    if (this.comment) this.comment.isChildrenRevealed = true;
+    this.onGetNextComments.emit({ postId, parentId, isFirstRun });
   }
 
   toggleReply(): void {
@@ -56,10 +48,12 @@ export class CommentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.comment) this.getUserInfo(this.comment.userId);
-    if (this.comment)
+    if (this.comment) {
       this.indentations = Array(this.comment.level)
         .fill(0)
         .map((x, i) => i);
+    }
+
+    console.log(this.comment?.isChildrenRevealed);
   }
 }

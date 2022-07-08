@@ -13,6 +13,12 @@ label {
   padding: 5em;
 }
 
+@media screen and (max-width: 648px) {
+  .form-container {
+    padding: 3em;
+  }
+}
+
 h3,
 p {
   color: var(--light-primary);
@@ -76,4 +82,9 @@ input {
 
 .modal-content {
   background-color: none;
+}
+
+.invalid-login-msg {
+  color: var(--primary);
+  font-weight: 600;
 }

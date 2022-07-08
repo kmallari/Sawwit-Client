@@ -24,6 +24,8 @@ export class PostComponent implements OnInit {
   ngOnInit(): void {
     const postId = String(this.route.snapshot.paramMap.get('postId'));
     this.getPostInfo(postId);
+
+    // magswitchmap para makuha yung cached comments
   }
 
   getPostInfo(id: string): void {
@@ -32,11 +34,4 @@ export class PostComponent implements OnInit {
       console.log(this.postData);
     });
   }
-
-  // getPostComments(postId: string): void {
-  //   this.commentsService.getPostComments(postId).subscribe((data) => {
-  //     this.comments = data;
-  //     console.log('COMMENTS', data);
-  //   });
-  // }
 }

@@ -19,7 +19,7 @@
       />
       <label for="floatingInput">EMAIL</label>
     </div>
-    <ul *ngIf="invalidEmail">
+    <ul class="invalid-signup" *ngIf="invalidEmail">
       <li>Email must be a valid email.</li>
     </ul>
     <div class="form-floating mt-2 mb-2">
@@ -32,7 +32,7 @@
       />
       <label for="floatingInput">USERNAME</label>
     </div>
-    <ul *ngIf="invalidUsername">
+    <ul class="invalid-signup" *ngIf="invalidUsername">
       <li>Username should be 4-20 characters long.</li>
       <li>No underscores at the beginning and end.</li>
       <li>No multiple underscores inside the username.</li>
@@ -48,7 +48,7 @@
       />
       <label for="floatingPassword">PASSWORD</label>
     </div>
-    <ul *ngIf="invalidPassword">
+    <ul class="invalid-signup" *ngIf="invalidPassword">
       <li>Password should be 8-20 characters long.</li>
       <li>Should contain at least one uppercase letter.</li>
       <li>Should contain at least one lowercase letter.</li>

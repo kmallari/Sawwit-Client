@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   }
 
   isUserLogin() {
+    this._auth.isLogin
     if (this._auth.getUserDetails() != null) {
       this.isLogin = true;
     }

@@ -26,7 +26,7 @@ export class SearchBarComponent implements OnInit {
     new EventEmitter<Subreddit>();
   searchedSubreddits: Subreddit[] = [];
   selectedSubreddit?: Subreddit;
-  placeHolder: string = 'Search subreddits';
+  placeHolder: string = 'Search subsawwits';
 
   constructor(
     private _subredditsService: SubredditsService,

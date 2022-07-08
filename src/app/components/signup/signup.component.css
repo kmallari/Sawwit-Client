@@ -13,6 +13,12 @@ label {
   padding: 5em;
 }
 
+@media screen and (max-width: 648px) {
+  .form-container {
+    padding: 3em;
+  }
+}
+
 h3,
 p {
   color: var(--light-primary);
@@ -75,4 +81,9 @@ ul {
 
 input {
   font-weight: 700;
+}
+
+.invalid-signup {
+  color: var(--primary);
+  font-weight: 600;
 }

@@ -2,6 +2,7 @@ export interface Comment {
   id: string;
   userId: string;
   username: string;
+  userProfilePicture: string;
   postId: string;
   parentId: string;
   body: string;
@@ -10,4 +11,5 @@ export interface Comment {
   upvotes: number;
   downvotes: number;
   childrenCount: number;
+  isChildrenRevealed: boolean;
 }

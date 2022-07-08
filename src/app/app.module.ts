@@ -25,6 +25,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { MakeCommentComponent } from './components/make-comment/make-comment.component';
+import { CreatePostCtaComponent } from './components/create-post-cta/create-post-cta.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +46,7 @@ import { MakeCommentComponent } from './components/make-comment/make-comment.com
     SearchBarComponent,
     FooterComponent,
     MakeCommentComponent,
+    CreatePostCtaComponent,
   ],
   imports: [
     BrowserModule,

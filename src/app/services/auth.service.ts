@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   constructor(private cookieService: CookieService) {}
-
+  isLogin: boolean = false; // persisting
+  
   getUserDetails() {
     return JSON.parse(this.cookieService.get('userData'));
   }

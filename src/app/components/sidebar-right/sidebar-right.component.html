@@ -1,4 +1,4 @@
-<div class="card h-100">
+<div *ngIf="isLogin" class="card">
   <form
     [formGroup]="createSubredditForm"
     (ngSubmit)="createSubreddit(createSubredditForm)"

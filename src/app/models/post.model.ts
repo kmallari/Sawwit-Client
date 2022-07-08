@@ -5,6 +5,7 @@ export interface Post {
   title: string;
   body: string;
   subreddit: string;
+  subredditIcon: string;
   createdAt: number;
   upvotes: number;
   downvotes: number;

@@ -1,5 +1,4 @@
-<!-- [ngStyle]="{ 'padding-left.em': getPaddingLeft() }" -->
-<div *ngIf="comment && author" class="comment-body d-flex flex-row">
+<div *ngIf="comment" class="comment-body d-flex flex-row">
   <div *ngIf="indentations" class="d-flex flex-row">
     <span *ngFor="let i of indentations" class="threadline mx-2 h-100"></span>
   </div>
@@ -8,7 +7,11 @@
       class="d-flex flex-row align-items-center mb-2 gap-1 comment-heading pt-4"
     >
       <div class="d-flex flex-row gap-1 align-items-center">
-        <img src="{{ author.profilePicture }}" alt="" class="profile-picture" />
+        <img
+          src="{{ comment.userProfilePicture }}"
+          alt=""
+          class="profile-picture"
+        />
         <h6 class="post-body">
           <a routerLink="/u/{{ comment.userId }}"> u/{{ comment.username }}</a>
         </h6>
@@ -59,8 +62,12 @@
     </div>
     <button
       type="button"
-      *ngIf="getNextComments && comment.childrenCount != 0 && !revealChildren"
-      (click)="getNextComments(comment.postId, comment.id)"
+      *ngIf="
+        getNextComments &&
+        comment.childrenCount !== 0 &&
+        comment.isChildrenRevealed === undefined
+      "
+      (click)="getNextComments(comment.postId, comment.id, false)"
       class="reveal-comments-btn"
     >
       Show {{ comment.childrenCount }} replies

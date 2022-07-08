@@ -40,17 +40,6 @@ export class SubredditsService {
       );
   }
 
-  getSubredditInfoFromName(name: string): Observable<Subreddit> {
-    return this.http
-      .get<Subreddit>(this.url + '/' + 'name/' + name, this.httpOptions)
-      .pipe(
-        tap((_) => {
-          // console.log('TAP', _);
-        }),
-        catchError(this.handleError<any>('getSubredditInfoFromName'))
-      );
-  }
-
   searchSubreddit(name: string): Observable<Subreddit[]> {
     if (!name.trim()) {
       return of([]);

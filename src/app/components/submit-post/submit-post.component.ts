@@ -20,7 +20,7 @@ export class SubmitPostComponent implements OnInit {
   createPostForm: FormGroup;
   postId?: string;
   user?: User;
-  selectedSubreddit?: Subreddit;
+  @Input() selectedSubreddit?: Subreddit;
 
   constructor(
     private fb: FormBuilder,

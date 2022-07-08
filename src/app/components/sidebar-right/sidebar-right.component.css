@@ -1,5 +1,6 @@
 .card {
   padding: 2em;
+  max-height: fit-content;
 }
 
 label {

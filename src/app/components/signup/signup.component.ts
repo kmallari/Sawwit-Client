@@ -30,7 +30,7 @@ export class SignupComponent implements OnInit {
     private _auth: AuthService
   ) {
     this.signupForm = this.fb.group({
-      email: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.email, Validators.required]),
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
@@ -59,21 +59,23 @@ export class SignupComponent implements OnInit {
     }
 
     if (!this.invalidEmail && !this.invalidUsername && !this.invalidPassword) {
-      this.usersService
-        .register(form.value.email, form.value.username, form.value.password)
-        // sa subscribe pwede maglagay ng error handler
-        .subscribe((res: any) => {
-          if (res.token) {
-            // console.log(res);
-            this._auth.setDataInCookies('userData', JSON.stringify(res.data));
-            this._auth.setDataInCookies('token', res.token);
-            this._router.navigate(['/home']);
-            window.location.reload();
-          } else {
-            // console.log(res);
-            alert(res.msg);
-          }
-        });
+      if (form.valid) {
+        this.usersService
+          .register(form.value.email, form.value.username, form.value.password)
+          // sa subscribe pwede maglagay ng error handler
+          .subscribe((res: any) => {
+            if (res.token) {
+              // console.log(res);
+              this._auth.setDataInCookies('userData', JSON.stringify(res.data));
+              this._auth.setDataInCookies('token', res.token);
+              this._router.navigate(['/home']);
+              window.location.reload();
+            } else {
+              // console.log(res);
+              alert(res.msg);
+            }
+          });
+      }
     } else {
       return;
     }

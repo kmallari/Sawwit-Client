@@ -14,7 +14,7 @@ export class SubredditComponent implements OnInit {
   posts: Post[] = [];
   subredditName: string;
   subreddit?: Subreddit; // NEED TO PASS THIS INTO SUBMIT -> SEARCH
-  isLogin: boolean = false;
+  isLogin: boolean = this._auth.isLogin;
 
   constructor(
     private postsService: PostsService,
@@ -28,7 +28,6 @@ export class SubredditComponent implements OnInit {
   ngOnInit(): void {
     this.getSubredditPosts();
     this.getSubredditInfo();
-    this.isUserLogin();
   }
 
   getSubredditPosts = () => {
@@ -46,10 +45,4 @@ export class SubredditComponent implements OnInit {
         this.subreddit = res;
       });
   };
-
-  isUserLogin() {
-    if (this._auth.getUserDetails() != null) {
-      this.isLogin = true;
-    }
-  }
 }

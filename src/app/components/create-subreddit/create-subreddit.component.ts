@@ -11,13 +11,13 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-sidebar-right',
-  templateUrl: './sidebar-right.component.html',
-  styleUrls: ['./sidebar-right.component.css'],
+  selector: 'app-create-subreddit',
+  templateUrl: './create-subreddit.component.html',
+  styleUrls: ['./create-subreddit.component.css'],
 })
-export class SidebarRightComponent implements OnInit {
+export class CreateSubredditComponent implements OnInit {
   createSubredditForm: FormGroup;
-  isLogin: boolean = false;
+  isLogin: boolean = this._auth.isLogin;
 
   constructor(
     private fb: FormBuilder,
@@ -31,9 +31,7 @@ export class SidebarRightComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.isUserLogin();
-  }
+  ngOnInit(): void {}
 
   createSubreddit(form: FormGroup) {
     this._subredditsService
@@ -42,11 +40,5 @@ export class SidebarRightComponent implements OnInit {
         console.log(res);
         this._router.navigate(['/s/' + res.name]);
       });
-  }
-
-  isUserLogin() {
-    if (this._auth.getUserDetails() != null) {
-      this.isLogin = true;
-    }
   }
 }

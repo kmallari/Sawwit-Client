@@ -51,6 +51,28 @@ input:focus {
 
 h6 {
   color: var(--light-secondary);
-  margin-bottom: 2em;
-  text-align: end;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.post-type-btn {
+  padding: 0.4em 1em;
+  background-color: var(--dark-secondary);
+  transition: all 0.1s ease-in-out;
+  border-radius: 0.4em;
+  font-weight: 600;
+  font-size: smaller;
+  color: var(--light-secondary);
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.nav > .nav-item > .active {
+  background-color: var(--secondary);
+  color: var(--light-primary);
 }

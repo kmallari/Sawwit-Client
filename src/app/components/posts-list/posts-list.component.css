@@ -5,3 +5,7 @@ li {
 ul {
   padding-left: 0;
 }
+
+.post-card {
+  cursor: pointer;
+}

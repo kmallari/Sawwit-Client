@@ -86,6 +86,14 @@
               </button>
             </li>
             <li>
+              <button
+                class="dropdown-item"
+                routerLink="/u/{{ user.id }}/update"
+              >
+                Update profile
+              </button>
+            </li>
+            <li>
               <button class="dropdown-item" (click)="logout()">Log out</button>
             </li>
           </div>
@@ -124,3 +132,5 @@
     </div>
   </div>
 </div>
+
+

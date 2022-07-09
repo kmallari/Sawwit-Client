@@ -10,11 +10,10 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class FeedContainerComponent implements OnInit {
   posts: Post[] = [];
-  isLogin: boolean = false;
+  isLogin: boolean = this._auth.isLogin;
   constructor(private postsService: PostsService, private _auth: AuthService) {}
   ngOnInit(): void {
     this.getAllPosts();
-    this.isUserLogin();
   }
 
   getAllPosts(): void {
@@ -22,11 +21,5 @@ export class FeedContainerComponent implements OnInit {
       this.posts = posts;
       // console.log('THIS POSTS', this.posts);
     });
-  }
-
-  isUserLogin() {
-    if (this._auth.getUserDetails() != null) {
-      this.isLogin = true;
-    }
   }
 }

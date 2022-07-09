@@ -18,20 +18,38 @@ import { Router } from '@angular/router';
   styleUrls: ['./search-bar.component.css'],
 })
 export class SearchBarComponent implements OnInit {
+  constructor(
+    private _subredditsService: SubredditsService,
+    private _router: Router
+  ) {}
+
+  ngOnInit(): void {
+    if (!this.fromNavbar) {
+      this.placeHolder = 'Where would you like to post?';
+    }
+    this.searchTerms
+      .pipe(
+        // wait 300ms after each keystroke before considering the term
+        debounceTime(500),
+        // ignore new term if same as previous term
+        distinctUntilChanged()
+        // switchMap((term: string) => this.movieService.searchMovies(term))
+      )
+      .subscribe((term) => {
+        this.getSearched(term);
+      });
+  }
+
   showSearchResults: boolean = false;
   inside: boolean = false;
   private searchTerms = new Subject<string>();
   @Input() fromNavbar: boolean = false;
   @Output() onSetSubreddit: EventEmitter<Subreddit> =
     new EventEmitter<Subreddit>();
+  @Output() onClearSubreddit: EventEmitter<any> = new EventEmitter<any>();
   searchedSubreddits: Subreddit[] = [];
   selectedSubreddit?: Subreddit;
   placeHolder: string = 'Search subsawwits';
-
-  constructor(
-    private _subredditsService: SubredditsService,
-    private _router: Router
-  ) {}
 
   @HostListener('click')
   clicked() {
@@ -73,22 +91,6 @@ export class SearchBarComponent implements OnInit {
 
   clearSelectedSubreddit(): void {
     this.selectedSubreddit = undefined;
-  }
-
-  ngOnInit(): void {
-    if (!this.fromNavbar) {
-      this.placeHolder = 'Where would you like to post?';
-    }
-    this.searchTerms
-      .pipe(
-        // wait 300ms after each keystroke before considering the term
-        debounceTime(500),
-        // ignore new term if same as previous term
-        distinctUntilChanged()
-        // switchMap((term: string) => this.movieService.searchMovies(term))
-      )
-      .subscribe((term) => {
-        this.getSearched(term);
-      });
+    this.onClearSubreddit.emit();
   }
 }

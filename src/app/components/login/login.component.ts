@@ -16,7 +16,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  isLogin: boolean = false;
+  isLogin: boolean = this._auth.isLogin;
   errorMessage: any;
   invalidLogin: boolean = false;
   constructor(
@@ -58,12 +58,6 @@ export class LoginComponent implements OnInit {
     } else {
       console.log('no res');
       this.invalidLogin = true;
-    }
-  }
-
-  isUserLogin() {
-    if (this._auth.getUserDetails() != null) {
-      this.isLogin = true;
     }
   }
 

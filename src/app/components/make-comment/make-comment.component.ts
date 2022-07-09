@@ -17,8 +17,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MakeCommentComponent implements OnInit {
   createCommentForm: FormGroup;
-  user?: User;
-  isLogin: boolean = false;
+  user?: User = this._auth.loggedInUser;
+  isLogin: boolean = this._auth.isLogin;
   @Input() parentId?: string;
   @Input() parentLevel?: number;
   @Output() onCreateComment: EventEmitter<any> = new EventEmitter();
@@ -33,18 +33,7 @@ export class MakeCommentComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.isUserLogin();
-    if (this.isLogin) {
-      this.user = this._auth.getUserDetails();
-    }
-  }
-
-  isUserLogin() {
-    if (this._auth.getUserDetails() != null) {
-      this.isLogin = true;
-    }
-  }
+  ngOnInit(): void {}
 
   createComment(form: FormGroup, parentId: string, parentLevel: number) {
     if (this.user && form.value.content !== '') {

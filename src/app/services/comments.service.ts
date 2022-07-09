@@ -84,4 +84,27 @@ export class CommentsService {
         catchError(this.handleError<Comment>('createComment'))
       );
   }
+
+  voteComment(
+    postId: string,
+    commentId: string,
+    userId: string,
+    vote: number
+  ): Observable<any> {
+    return this.http
+      .post<any>(
+        this.url + '/' + postId + '/comments/' + commentId,
+        {
+          userId: userId,
+          vote: vote,
+        },
+        this.httpOptions
+      )
+      .pipe(
+        tap((_) => {
+          // console.log(_)
+        }),
+        catchError(this.handleError<any>('voteComment'))
+      );
+  }
 }

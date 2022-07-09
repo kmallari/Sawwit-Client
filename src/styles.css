@@ -27,7 +27,6 @@ button:focus {
   background-color: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--dark-secondary);
   transition: all 0.1s ease-in-out;
-  cursor: pointer;
   max-height: 300px;
 }
 
@@ -160,4 +159,20 @@ a:hover {
 
 textarea {
   transition: all 0.1s ease-in-out;
+}
+
+.vote-btn {
+  padding: 0;
+  mading: 0;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  color: var(--light-primary);
+}
+
+.vote-btn:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
 }

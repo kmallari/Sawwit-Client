@@ -28,8 +28,6 @@ input:focus {
 }
 
 button {
-  /* width: 140px; */
-  /* height: 40px; */
   font-size: small;
   background-color: var(--primary);
   border: none;
@@ -40,4 +38,3 @@ button {
   padding: 0.8em 1em;
   border-radius: 0.4em;
 }
-

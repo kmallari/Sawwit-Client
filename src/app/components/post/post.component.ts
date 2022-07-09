@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Post } from 'src/app/models/post.model';
 import { Subreddit } from 'src/app/models/subreddit.model';
-import { CommentsService } from 'src/app/services/comments.service';
 import { PostsService } from 'src/app/services/posts.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Comment } from 'src/app/models/comment.model';
@@ -31,7 +30,7 @@ export class PostComponent implements OnInit {
   getPostInfo(id: string): void {
     this.postsService.getPost(id).subscribe((data) => {
       this.postData = data;
-      console.log(this.postData);
+      // console.log(this.postData);
     });
   }
 }

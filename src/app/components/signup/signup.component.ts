@@ -16,7 +16,7 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
-  isLogin: boolean = false;
+  isLogin: boolean = this._auth.isLogin;
   errorMessage: any;
   signupForm: FormGroup;
   invalidEmail: boolean = false;
@@ -36,10 +36,7 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.isUserLogin();
-    // console.log(this.isLogin);
-  }
+  ngOnInit(): void {}
 
   signupUser(form: FormGroup): void {
     if (!this.isValidEmail(form.value.email)) {
@@ -78,12 +75,6 @@ export class SignupComponent implements OnInit {
       }
     } else {
       return;
-    }
-  }
-
-  isUserLogin() {
-    if (this._auth.getUserDetails() != null) {
-      this.isLogin = true;
     }
   }
 

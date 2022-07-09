@@ -25,14 +25,18 @@
           <span class="threadline mx-2 h-100"> </span>
         </div>
         <div class="flex-one">
-          <p>{{ comment.body }}</p>
+          <p style="white-space: pre-line">{{ comment.body }}</p>
           <div class="d-flex justify-content-between align-items-center pt-2">
             <div class="d-flex flex-row align-items-center gap-2">
-              <i class="bi bi-caret-up-fill"></i>
+              <button class="vote-btn" (click)="voteComment(1)">
+                <i class="bi bi-caret-up-fill"></i>
+              </button>
               <span class="vote-count">{{
                 comment.upvotes - comment.downvotes
               }}</span>
-              <i class="bi bi-caret-down-fill"></i>
+              <button class="vote-btn" (click)="voteComment(-1)">
+                <i class="bi bi-caret-down-fill"></i>
+              </button>
 
               <button
                 type="button"

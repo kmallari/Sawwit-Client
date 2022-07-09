@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarLeftComponent } from './components/sidebar-left/sidebar-left.component';
-import { SidebarRightComponent } from './components/sidebar-right/sidebar-right.component';
+import { CreateSubredditComponent } from './components/create-subreddit/create-subreddit.component';
 // import { LoginComponent } from './components/login/login.component';
 // import { SignupComponent } from './components/signup/signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -26,12 +26,13 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { FooterComponent } from './components/footer/footer.component';
 import { MakeCommentComponent } from './components/make-comment/make-comment.component';
 import { CreatePostCtaComponent } from './components/create-post-cta/create-post-cta.component';
+import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     SidebarLeftComponent,
-    SidebarRightComponent,
+    CreateSubredditComponent,
     // LoginComponent,
     // SignupComponent,
     PostsListComponent,
@@ -47,6 +48,7 @@ import { CreatePostCtaComponent } from './components/create-post-cta/create-post
     FooterComponent,
     MakeCommentComponent,
     CreatePostCtaComponent,
+    UpdateUserProfileComponent,
   ],
   imports: [
     BrowserModule,

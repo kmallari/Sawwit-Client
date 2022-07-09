@@ -107,4 +107,22 @@ export class PostsService {
       catchError(this.handleError<any>('getPost'))
     );
   }
+
+  votePost(postId: string, userId: string, vote: number): Observable<any> {
+    return this.http
+      .post<any>(
+        this.url + '/' + postId,
+        {
+          userId: userId,
+          vote: vote,
+        },
+        this.httpOptions
+      )
+      .pipe(
+        tap((_) => {
+          // console.log(_);
+        }),
+        catchError(this.handleError<any>('votePost'))
+      );
+  }
 }

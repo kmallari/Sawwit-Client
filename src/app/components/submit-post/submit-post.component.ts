@@ -17,11 +17,6 @@ import { Subreddit } from 'src/app/models/subreddit.model';
   styleUrls: ['./submit-post.component.css'],
 })
 export class SubmitPostComponent implements OnInit {
-  createPostForm: FormGroup;
-  postId?: string;
-  user?: User;
-  @Input() selectedSubreddit?: Subreddit;
-
   constructor(
     private fb: FormBuilder,
     private postsService: PostsService,
@@ -35,9 +30,12 @@ export class SubmitPostComponent implements OnInit {
     });
   }
 
-  getUserInfo() {
-    this.user = this._auth.getUserDetails();
-  }
+  ngOnInit(): void {}
+
+  createPostForm: FormGroup;
+  postId?: string;
+  user?: User = this._auth.loggedInUser;
+  @Input() selectedSubreddit?: Subreddit;
 
   createPost(form: FormGroup) {
     if (this.user && this.selectedSubreddit) {
@@ -61,7 +59,7 @@ export class SubmitPostComponent implements OnInit {
     this.selectedSubreddit = subreddit;
   }
 
-  ngOnInit(): void {
-    this.getUserInfo();
+  clearSubreddit() {
+    this.selectedSubreddit = undefined;
   }
 }

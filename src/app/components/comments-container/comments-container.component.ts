@@ -36,7 +36,7 @@ export class CommentsContainerComponent implements OnInit {
 
         const parentCommentsIds = new Set();
         let parentId = '';
-        
+
         for (let i = 0; i < this.comments.length; i++) {
           parentId = this.comments[i].parentId;
           parentCommentsIds.add(parentId);
@@ -47,7 +47,6 @@ export class CommentsContainerComponent implements OnInit {
             this.comments[i].isChildrenRevealed = true;
           }
         }
-
       });
   }
 

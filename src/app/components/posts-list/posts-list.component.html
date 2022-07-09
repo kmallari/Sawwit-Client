@@ -3,6 +3,7 @@
   <li
     *ngFor="let post of posts"
     routerLink="/s/{{ post.subreddit }}/{{ post.id }}"
+    class="post-card"
   >
     <app-post-card [postData]="post"></app-post-card>
   </li>

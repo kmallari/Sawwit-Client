@@ -9,18 +9,13 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  isLogin: boolean = false;
-  user?: User;
+  isLogin: boolean = this._auth.isLogin;
+  user?: User = this._auth.loggedInUser;
 
   constructor(private router: Router, private _auth: AuthService) {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false; // refreshes page on route change
-  }
 
-  isUserLogin() {
-    this._auth.isLogin
-    if (this._auth.getUserDetails() != null) {
-      this.isLogin = true;
-    }
+    console.log(this.isLogin);
   }
 
   logout() {
@@ -29,10 +24,5 @@ export class NavbarComponent implements OnInit {
     window.location.reload();
   }
 
-  ngOnInit(): void {
-    this.isUserLogin();
-    if (this.isLogin) {
-      this.user = this._auth.getUserDetails();
-    }
-  }
+  ngOnInit(): void {}
 }

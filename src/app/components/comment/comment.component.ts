@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Comment } from '../../models/comment.model';
+import { User } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 import * as moment from 'moment';
+import { CommentsService } from 'src/app/services/comments.service';
 
 @Component({
   selector: 'app-comment',
@@ -8,29 +11,31 @@ import * as moment from 'moment';
   styleUrls: ['./comment.component.css'],
 })
 export class CommentComponent implements OnInit {
-  @Input() comment: Comment | null = null;
+  constructor(
+    private _auth: AuthService,
+    private _commentsService: CommentsService
+  ) {}
+  ngOnInit(): void {
+    if (this.comment) {
+      console.log(this.comment);
+      this.indentations = Array(this.comment.level)
+        .fill(0)
+        .map((x, i) => i);
+    }
+  }
+
+  @Input() comment?: Comment;
+  user?: User = this._auth.loggedInUser;
   @Output() onGetNextComments: EventEmitter<any> = new EventEmitter();
   @Output() onCreateComment: EventEmitter<any> = new EventEmitter();
-  // revealChildren: boolean = false;
-  // kailangan if kukunin from cache yung data, true ito (if may children)
-  // hindi naman server data ito
-  // if kapag nag getnext comments
-
-  // kunin lahat ng parent keys sa cache
   indentations: number[] = [];
   showReplyBox: boolean = false;
-
-  constructor() {}
 
   getTimeAgo(date: number): string {
     return moment(date).fromNow();
   }
 
   getNextComments(postId: string, parentId: string, isFirstRun: boolean): void {
-    // if (this.comment) {
-    //   // DOES NOT WORK?? WHY??
-    //   this.comment.isChildrenRevealed = true;
-    // }
     if (this.comment) this.comment.isChildrenRevealed = true;
     this.onGetNextComments.emit({ postId, parentId, isFirstRun });
   }
@@ -43,17 +48,16 @@ export class CommentComponent implements OnInit {
     this.onCreateComment.emit(event);
   }
 
-  onClick(): void {
-    if (this.comment) console.log('comment', this.comment);
-  }
-
-  ngOnInit(): void {
-    if (this.comment) {
-      this.indentations = Array(this.comment.level)
-        .fill(0)
-        .map((x, i) => i);
+  voteComment(vote: number) {
+    if (this.comment && this.user) {
+      const postId = this.comment.postId;
+      const commentId = this.comment.id;
+      const userId = this.user.id;
+      this._commentsService
+        .voteComment(postId, commentId, userId, vote)
+        .subscribe((data) => {
+          console.log(data);
+        });
     }
-
-    console.log(this.comment?.isChildrenRevealed);
   }
 }

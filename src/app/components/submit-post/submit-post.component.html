@@ -15,6 +15,7 @@
               role="tab"
               aria-controls="text"
               aria-selected="true"
+              (click)="setType(1)"
             >
               Text
             </button>
@@ -29,6 +30,7 @@
               role="tab"
               aria-controls="image"
               aria-selected="false"
+              (click)="setType(2)"
             >
               Image
             </button>
@@ -43,13 +45,14 @@
               role="tab"
               aria-controls="url"
               aria-selected="false"
+              (click)="setType(3)"
             >
               URL
             </button>
           </li>
         </ul>
       </nav>
-      <div *ngIf="user">
+      <div *ngIf="user" class="mb-2 mb-md-0">
         <h6>
           Posting as
           <span
@@ -86,7 +89,7 @@
             [minRows]="3"
             class="form-control body"
             placeholder="Body (optional)"
-            formControlName="content"
+            formControlName="body"
           ></textarea>
         </div>
         <div
@@ -95,7 +98,19 @@
           role="tabpanel"
           aria-labelledby="image-tab"
         >
-          <input class="form-control" type="file" id="formFile" />
+          <label
+            for="formFile"
+            class="form-control image-upload d-flex flex-row gap-2"
+          >
+            <i class="bi bi-image"></i>{{ imageUploadPlaceholder }}
+            <input
+              formControlName="image"
+              class="form-control image-upload-input"
+              type="file"
+              id="formFile"
+              accept="image/x-png, image/gif, image/jpeg"
+              (change)="onFileChange($event)"
+          /></label>
         </div>
         <div
           class="tab-pane fade"
@@ -103,7 +118,12 @@
           role="tabpanel"
           aria-labelledby="url-tab"
         >
-          <input type="text" />
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Place link here (required)"
+            FormControlName="url"
+          />
         </div>
       </div>
 

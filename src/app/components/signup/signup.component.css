@@ -83,7 +83,11 @@ input {
   font-weight: 700;
 }
 
-.invalid-signup {
+.invalid-signup, .error-message {
   color: var(--primary);
   font-weight: 600;
+}
+
+.error-border {
+  box-shadow: 0 0 0 0.3em rgba(216, 74, 97, 0.5);
 }

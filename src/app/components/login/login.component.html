@@ -5,27 +5,41 @@
   <h3>Log In.</h3>
   <p>Login to enter sawwit.</p>
   <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm)">
-    <div class="form-floating">
+    <div class="form-floating d-flex flex-row">
       <input
         type="email"
-        class="form-control"
+        class="form-control {{ invalidLogin ? 'error-border' : '' }}"
         id="floatingInput"
         placeholder="name@example.com"
         formControlName="loginInfo"
+        (change)="setInvalidLogin()"
       />
-      <label for="floatingInput">USERNAME/EMAIL</label>
+      <label
+        for="floatingInput"
+        class="d-flex flex-row align-items-center gap-2"
+        ><i class="bi bi-person"></i>USERNAME/EMAIL</label
+      >
+      <div class="position-absolute error-tag" *ngIf="invalidLogin">
+        <i class="bi bi-exclamation-circle"></i>
+      </div>
     </div>
     <div class="form-floating">
       <input
         type="password"
-        class="form-control"
+        class="form-control {{ invalidLogin ? 'error-border' : '' }}"
         id="floatingPassword"
         placeholder="Password"
         formControlName="password"
+        (change)="setInvalidLogin()"
       />
-      <label for="floatingPassword">PASSWORD</label>
+      <label
+        for="floatingPassword"
+        class="d-flex flex-row align-items-center gap-2"
+        ><i class="bi bi-key"></i>PASSWORD</label
+      >
     </div>
-    <p class="invalid-login-msg" *ngIf="invalidLogin">
+    
+    <p class="invalid-login-msg m-0" *ngIf="invalidLogin">
       Invalid credentials or user does not exist.
     </p>
     <button type="submit" class="btn btn-primary">Log In</button>

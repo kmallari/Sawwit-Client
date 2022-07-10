@@ -10,7 +10,6 @@ input {
   background-color: var(--dark-secondary);
   border: none;
   color: var(--light-secondary);
-  padding-top: 1em;
 }
 
 textarea:focus,
@@ -25,6 +24,7 @@ input:focus {
 .title {
   /* height: 36px !important; */
   padding-bottom: 0;
+  padding-top: 1em;
 }
 
 .btn {
@@ -75,4 +75,31 @@ ul {
 .nav > .nav-item > .active {
   background-color: var(--secondary);
   color: var(--light-primary);
+}
+
+.image-upload-input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.image-upload {
+  background-color: var(--dark-secondary);
+  border: none;
+  outline: none;
+  color: #60676d;
+  height: 8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-upload:hover {
+  background-color: var(--dark-secondary);
+  box-shadow: 0 0 0 1px var(--secondary);
+  border: none;
+  outline: none;
 }

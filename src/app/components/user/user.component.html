@@ -2,10 +2,11 @@
 <div class="w-100 container mt-5">
   <div class="row">
     <div class="col-12 col-lg-8 d-flex flex-column gap-4">
-      <div class="card p-4">
-        <app-create-post-cta
-          *ngIf="isLogin && loggedInUser && userId === loggedInUser.id"
-        ></app-create-post-cta>
+      <div
+        class="card p-4"
+        *ngIf="isLogin && loggedInUser && userId === loggedInUser.id"
+      >
+        <app-create-post-cta></app-create-post-cta>
       </div>
       <app-posts-list [posts]="posts"></app-posts-list>
     </div>

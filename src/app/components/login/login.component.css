@@ -88,3 +88,15 @@ input {
   color: var(--primary);
   font-weight: 600;
 }
+
+.error-tag {
+  right: 0.8em;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary);
+  font-size: 1.4em;
+}
+
+.error-border {
+  box-shadow: 0 0 0 0.3em rgba(235, 48, 73, 0.5);
+}

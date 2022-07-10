@@ -17,9 +17,11 @@ export class FeedContainerComponent implements OnInit {
   }
 
   getAllPosts(): void {
-    this.postsService.getAllPosts().subscribe((posts) => {
-      this.posts = posts;
-      // console.log('THIS POSTS', this.posts);
-    });
+    this.postsService.getAllPosts().subscribe(
+      (posts) => {
+        this.posts = posts;
+      },
+      
+    );
   }
 }

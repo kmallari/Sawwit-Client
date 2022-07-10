@@ -17,11 +17,12 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class SignupComponent implements OnInit {
   isLogin: boolean = this._auth.isLogin;
-  errorMessage: any;
   signupForm: FormGroup;
   invalidEmail: boolean = false;
   invalidUsername: boolean = false;
   invalidPassword: boolean = false;
+  errorMessage: string = '';
+
   constructor(
     private fb: FormBuilder,
     private usersService: UsersService,
@@ -39,39 +40,36 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {}
 
   signupUser(form: FormGroup): void {
-    if (!this.isValidEmail(form.value.email)) {
-      this.invalidEmail = true;
-    } else {
-      this.invalidEmail = false;
-    }
-    if (!this.isValidUsername(form.value.username)) {
-      this.invalidUsername = true;
-    } else {
-      this.invalidUsername = false;
-    }
-    if (!this.isValidPassword(form.value.password)) {
-      this.invalidPassword = true;
-    } else {
-      this.invalidPassword = false;
-    }
+    this.isValidEmail(form.value.email);
+    this.isValidUsername(form.value.username);
+    this.isValidPassword(form.value.password);
 
     if (!this.invalidEmail && !this.invalidUsername && !this.invalidPassword) {
       if (form.valid) {
         this.usersService
           .register(form.value.email, form.value.username, form.value.password)
           // sa subscribe pwede maglagay ng error handler
-          .subscribe((res: any) => {
-            if (res.token) {
-              // console.log(res);
-              this._auth.setDataInCookies('userData', JSON.stringify(res.data));
-              this._auth.setDataInCookies('token', res.token);
-              this._router.navigate(['/home']);
-              window.location.reload();
-            } else {
-              // console.log(res);
-              alert(res.msg);
+          .subscribe(
+            (res: any) => {
+              if (res.token) {
+                // console.log(res);
+                this._auth.setDataInCookies(
+                  'userData',
+                  JSON.stringify(res.data)
+                );
+                this._auth.setDataInCookies('token', res.token);
+                this._router.navigate(['/home']);
+                window.location.reload();
+              } else {
+                // console.log(res);
+                alert(res.msg);
+              }
+            },
+            (error) => {
+              console.log('ERROR!', error);
+              this.errorMessage = error.error.message;
             }
-          });
+          );
       }
     } else {
       return;
@@ -83,19 +81,22 @@ export class SignupComponent implements OnInit {
     // no _ at the beginning and end
     // no __* inside
     // only allows alphanumeric characters and _
-
+    console.log(username);
     if (/^(?=[a-zA-Z0-9_]{4,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/.test(username)) {
-      return true;
+      this.invalidUsername = false;
+    } else {
+      this.invalidUsername = true;
     }
-    return false;
+    console.log(this.invalidUsername);
   };
 
   isValidEmail = (email: string) => {
     console.log('TEST');
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      return true;
+      this.invalidEmail = false;
+    } else {
+      this.invalidEmail = true;
     }
-    return false;
   };
 
   // function for  checking if password is valid using regex
@@ -108,9 +109,9 @@ export class SignupComponent implements OnInit {
     if (
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$/.test(password)
     ) {
-      return true;
+      this.invalidPassword = false;
     } else {
-      return false;
+      this.invalidPassword = true;
     }
   };
 }

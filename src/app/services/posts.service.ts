@@ -15,6 +15,9 @@ export class PostsService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
+  imageUploadHeader = {
+    headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }),
+  };
   constructor(
     private http: HttpClient,
     private subredditsService: SubredditsService
@@ -75,28 +78,79 @@ export class PostsService {
   createPost(
     title: string,
     content: string,
+    file: File | undefined,
+    url: string,
     userId: string,
     username: string,
-    subreddit: string
+    subreddit: string,
+    type: number
   ): Observable<Post> {
-    return this.http
-      .post<Post>(
-        this.url + '/submit',
-        {
-          title: title,
-          body: content,
-          userId: userId,
-          username: username,
-          subreddit: subreddit,
-        },
-        this.httpOptions
-      )
-      .pipe(
-        tap((_) => {
-          // console.log(_);
-        }),
-        catchError(this.handleError<any>('createPost'))
-      );
+    if (type === 1) {
+      return this.http
+        .post<Post>(
+          this.url + '/submit',
+          {
+            title: title,
+            body: content,
+            userId: userId,
+            username: username,
+            subreddit: subreddit,
+            type: type,
+          },
+          this.httpOptions
+        )
+        .pipe(
+          tap((_) => {
+            // console.log(_);
+          }),
+          catchError(this.handleError<any>('createPost'))
+        );
+    } else if (type === 2 && file) {
+      console.log('FILE', file);
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('imgFile', file);
+      formData.append('userId', userId);
+      formData.append('username', username);
+      formData.append('subreddit', subreddit);
+      formData.append('type', '2');
+
+      for (let pair of formData) {
+        console.log(pair);
+      }
+
+      return this.http
+        .post<Post>(this.url + '/submit', formData, {
+          reportProgress: true,
+          observe: 'events',
+        })
+        .pipe(
+          tap((_) => {
+            // console.log(_);
+          }),
+          catchError(this.handleError<any>('createPost'))
+        );
+    } else {
+      return this.http
+        .post<Post>(
+          this.url + '/submit',
+          {
+            title: title,
+            url: url,
+            userId: userId,
+            username: username,
+            subreddit: subreddit,
+            type: type,
+          },
+          this.httpOptions
+        )
+        .pipe(
+          tap((_) => {
+            // console.log(_);
+          }),
+          catchError(this.handleError<any>('createPost'))
+        );
+    }
   }
 
   getPost(id: string): Observable<Post> {
@@ -123,6 +177,22 @@ export class PostsService {
           // console.log(_);
         }),
         catchError(this.handleError<any>('votePost'))
+      );
+  }
+
+  uploadImage(fileToUpload: File) {
+    const formData = new FormData();
+    formData.append('imgFile', fileToUpload);
+    return this.http
+      .post<any>(this.url + '/media', formData, {
+        reportProgress: true,
+        observe: 'events',
+      })
+      .pipe(
+        tap((_) => {
+          // console.log(_);
+          catchError(this.handleError<any>('uploadImage'));
+        })
       );
   }
 }

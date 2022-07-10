@@ -52,7 +52,8 @@ export class LoginComponent implements OnInit {
             }
           },
           (err) => {
-            console.log('ERROR!', err);
+            console.error('ERROR!', err);
+            this.invalidLogin = true;
           }
         );
     } else {
@@ -65,5 +66,9 @@ export class LoginComponent implements OnInit {
     // mutate din yung isLogin sa _auth service dito
     this._auth.clearStorage();
     this._router.navigate(['']);
+  }
+
+  setInvalidLogin() {
+    if (this.invalidLogin) this.invalidLogin = false;
   }
 }

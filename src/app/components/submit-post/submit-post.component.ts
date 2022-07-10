@@ -25,7 +25,9 @@ export class SubmitPostComponent implements OnInit {
   ) {
     this.createPostForm = this.fb.group({
       title: new FormControl('', [Validators.required]),
-      content: new FormControl('', [Validators.required]),
+      body: new FormControl(''),
+      image: new FormControl(''),
+      url: new FormControl(''),
       subreddit: new FormControl('', [Validators.required]),
     });
   }
@@ -36,22 +38,40 @@ export class SubmitPostComponent implements OnInit {
   postId?: string;
   user?: User = this._auth.loggedInUser;
   @Input() selectedSubreddit?: Subreddit;
+  imageUploadPlaceholder: string = 'Click here to upload an image.';
+  imageToUpload?: File;
+  type: number = 1;
 
   createPost(form: FormGroup) {
+    console.log(form.value.image);
+
     if (this.user && this.selectedSubreddit) {
       form.value.subreddit = this.selectedSubreddit.name;
+
       this.postsService
         .createPost(
           form.value.title,
-          form.value.content,
+          form.value.body,
+          this.imageToUpload,
+          form.value.url,
           this.user.id,
           this.user.username,
-          form.value.subreddit
+          form.value.subreddit,
+          this.type
         )
         .subscribe((res: any) => {
           this.postId = res.id;
           this.router.navigate(['/s', form.value.subreddit, res.id]);
         });
+    }
+  }
+
+  upload() {
+    if (this.imageToUpload) {
+      console.log(this.imageToUpload);
+      this.postsService.uploadImage(this.imageToUpload).subscribe((data) => {
+        console.log(data);
+      });
     }
   }
 
@@ -61,5 +81,15 @@ export class SubmitPostComponent implements OnInit {
 
   clearSubreddit() {
     this.selectedSubreddit = undefined;
+  }
+
+  onFileChange(event: any) {
+    this.imageToUpload = event.target.files.item(0);
+    if (event) this.imageUploadPlaceholder = event.target.files[0].name;
+  }
+
+  setType(newType: number) {
+    this.type = newType;
+    console.log(this.type);
   }
 }

@@ -1,10 +1,36 @@
 .card {
-  max-height: fit-content;
   padding: 2em;
+}
+
+textarea,
+input {
+  resize: none;
+  background-color: var(--dark-secondary);
+  border: none;
+  color: var(--light-secondary);
+}
+
+textarea:focus,
+input:focus {
+  background-color: var(--dark-secondary);
+  box-shadow: 0 0 0 1px var(--secondary);
+  color: var(--light-secondary);
+  border: none;
+  outline: none;
+}
+
+label {
+  color: #7e848a;
+  opacity: 100%;
 }
 
 @media (min-width: 992px) {
   .container {
     max-width: 840px;
   }
+}
+
+.profile-picture {
+  min-height: 80px;
+  min-width: 80px;
 }

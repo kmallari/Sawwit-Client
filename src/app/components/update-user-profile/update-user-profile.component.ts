@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -21,11 +22,14 @@ export class UpdateUserProfileComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.user = this._auth.loggedInUser;
+    console.log('USER', this.user);
+  }
 
   updateUserForm: FormGroup;
   newProfilePicture?: File;
-
+  user?: User;
   // for clearing the file input
   @ViewChild('fileInput', { static: false })
   InputVar?: ElementRef;

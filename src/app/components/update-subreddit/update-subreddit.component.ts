@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Subreddit } from 'src/app/models/subreddit.model';
 import { SubredditsService } from 'src/app/services/subreddits.service';
 
 @Component({
@@ -21,18 +22,33 @@ export class UpdateSubredditComponent implements OnInit {
     this.subredditName = this._route.snapshot.params['subreddit'];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getSubredditInfo();
+  }
 
   updateSubredditForm: FormGroup;
   newIcon?: File;
   subredditName: string;
+  subreddit?: Subreddit;
+  imageUploadPlaceholder: string = 'Upload a new icon (Optional)';
+  description: string = '';
 
   // for clearing the file input
   @ViewChild('fileInput', { static: false })
   InputVar?: ElementRef;
 
+  getSubredditInfo = () => {
+    this._subredditService
+      .getSubredditInfo(this.subredditName)
+      .subscribe((subreddit) => {
+        this.subreddit = subreddit;
+        this.description = subreddit.description;
+      });
+  };
+
   onFileChange = (event: any) => {
     this.newIcon = event.target.files.item(0);
+    this.imageUploadPlaceholder = event.target.files.item(0).name;
   };
 
   updateSubreddit = (form: FormGroup) => {
@@ -50,15 +66,13 @@ export class UpdateSubredditComponent implements OnInit {
       fieldsToUpdate['icon'] = this.newIcon;
     }
 
-    console.log(fieldsToUpdate);
-
     if (Object.keys(fieldsToUpdate).length !== 0) {
+      this.description = form.value.description;
       this._subredditService
         .updateSubreddit(this.subredditName, fieldsToUpdate)
         .subscribe((data) => {
-          form.reset();
           this.resetFileInput();
-          console.log(data);
+          window.location.reload();
         });
     }
   };

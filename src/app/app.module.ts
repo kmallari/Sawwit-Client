@@ -5,8 +5,6 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarLeftComponent } from './components/sidebar-left/sidebar-left.component';
 import { CreateSubredditComponent } from './components/create-subreddit/create-subreddit.component';
-// import { LoginComponent } from './components/login/login.component';
-// import { SignupComponent } from './components/signup/signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PostsListComponent } from './components/posts-list/posts-list.component';
@@ -14,6 +12,7 @@ import { PostCardComponent } from './components/post-card/post-card.component';
 import { FeedContainerComponent } from './components/feed-container/feed-container.component';
 import { SubmitPostComponent } from './components/submit-post/submit-post.component';
 import { AutosizeModule } from 'ngx-autosize';
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { PostComponent } from './components/post/post.component';
 import { SubredditComponent } from './components/subreddit/subreddit.component';
 import { UserComponent } from './components/user/user.component';
@@ -34,8 +33,6 @@ import { UpdateSubredditComponent } from './components/update-subreddit/update-s
     NavbarComponent,
     SidebarLeftComponent,
     CreateSubredditComponent,
-    // LoginComponent,
-    // SignupComponent,
     PostsListComponent,
     PostCardComponent,
     FeedContainerComponent,
@@ -58,6 +55,7 @@ import { UpdateSubredditComponent } from './components/update-subreddit/update-s
     ReactiveFormsModule,
     HttpClientModule,
     AutosizeModule,
+    InfiniteScrollModule,
     CKEditorModule,
     AuthModule,
   ],

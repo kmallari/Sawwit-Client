@@ -20,23 +20,33 @@ export class UserComponent implements OnInit {
     private _auth: AuthService
   ) {}
 
+  ngOnInit(): void {
+    console.log(this.userId);
+    this.getUserPostsUsingPagination();
+    this.getUserInfo();
+  }
+
   posts: Post[] = [];
   isLogin: boolean = this._auth.isLogin;
   loggedInUser?: User = this._auth.loggedInUser;
   userInPage?: User;
   userId = String(this.route.snapshot.paramMap.get('userId'));
-
-  ngOnInit(): void {
-    console.log(this.userId);
-    this.getUserPosts();
-    this.getUserInfo();
-  }
+  page: number = 1;
 
   getUserPosts = () => {
     this.postsService.getUserPosts(this.userId).subscribe((posts) => {
       this.posts = posts;
       // console.log('THIS POSTS', this.posts);
     });
+  };
+
+  getUserPostsUsingPagination = () => {
+    this.postsService
+      .getUserPostsUsingPagination(this.userId, String(this.page), '4')
+      .subscribe((posts) => {
+        console.log(posts);
+        this.posts = this.posts.concat(posts);
+      });
   };
 
   getUserInfo = () => {
@@ -50,6 +60,12 @@ export class UserComponent implements OnInit {
   }
 
   getBalloonDay(date: number): string {
-    return moment(date).format("MMMM Do, YYYY")
+    return moment(date).format('MMMM Do, YYYY');
+  }
+
+  onScroll() {
+    console.log('GETTING NEW PAGE');
+    this.page++;
+    this.getUserPostsUsingPagination();
   }
 }

@@ -47,6 +47,68 @@ export class PostsService {
     );
   }
 
+  getAllPostsUsingPagination(
+    page: string,
+    itemsPerPage: string
+  ): Observable<Post[]> {
+    return this.http
+      .get<Post[]>(
+        this.url + `/pagination?page=${page}&itemsPerPage=${itemsPerPage}`
+      )
+      .pipe(
+        tap((_) => {
+          // console.log(_);
+        }),
+        catchError(this.handleError<any>('getAllPostsUsingPagination'))
+      );
+  }
+
+  getSubredditPostsUsingPagination(
+    subredditName: string,
+    page: string,
+    itemsPerPage: string
+  ): Observable<Post[]> {
+    return this.http
+      .get<Post[]>(
+        this.url +
+          '/subreddit/' +
+          subredditName +
+          '/pagination?page=' +
+          page +
+          '&itemsPerPage=' +
+          itemsPerPage
+      )
+      .pipe(
+        tap((_) => {
+          // console.log(_);
+        }),
+        catchError(this.handleError<any>('getSubredditPostsUsingPagination'))
+      );
+  }
+
+  getUserPostsUsingPagination(
+    userId: string,
+    page: string,
+    itemsPerPage: string
+  ): Observable<Post[]> {
+    return this.http
+      .get<Post[]>(
+        this.url +
+          '/user/' +
+          userId +
+          '/pagination?page=' +
+          page +
+          '&itemsPerPage=' +
+          itemsPerPage
+      )
+      .pipe(
+        tap((_) => {
+          // console.log(_);
+        }),
+        catchError(this.handleError<any>('getUserPostsUsingPagination'))
+      );
+  }
+
   getSubredditPosts(subredditName: string): Observable<Post[]> {
     // is this legal??
     return this.http

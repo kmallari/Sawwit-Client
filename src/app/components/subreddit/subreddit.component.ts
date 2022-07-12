@@ -11,11 +11,6 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./subreddit.component.css'],
 })
 export class SubredditComponent implements OnInit {
-  posts: Post[] = [];
-  subredditName: string;
-  subreddit?: Subreddit; // NEED TO PASS THIS INTO SUBMIT -> SEARCH
-  isLogin: boolean = this._auth.isLogin;
-
   constructor(
     private postsService: PostsService,
     private subredditsService: SubredditsService,
@@ -26,9 +21,15 @@ export class SubredditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSubredditPosts();
+    this.getSubredditPostsUsingPagination();
     this.getSubredditInfo();
   }
+
+  posts: Post[] = [];
+  subredditName: string;
+  subreddit?: Subreddit; // NEED TO PASS THIS INTO SUBMIT -> SEARCH
+  isLogin: boolean = this._auth.isLogin;
+  page: number = 1;
 
   getSubredditPosts = () => {
     this.postsService
@@ -37,6 +38,25 @@ export class SubredditComponent implements OnInit {
         this.posts = posts;
       });
   };
+
+  getSubredditPostsUsingPagination = () => {
+    this.postsService
+      .getSubredditPostsUsingPagination(
+        this.subredditName,
+        String(this.page),
+        '4'
+      )
+      .subscribe((posts) => {
+        console.log(posts);
+        this.posts = this.posts.concat(posts);
+      });
+  };
+
+  onScroll() {
+    console.log('GETTING NEW PAGE');
+    this.page++;
+    this.getSubredditPostsUsingPagination();
+  }
 
   getSubredditInfo = () => {
     this.subredditsService

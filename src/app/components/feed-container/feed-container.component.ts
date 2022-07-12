@@ -18,13 +18,14 @@ export class FeedContainerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAllPosts();
+    this.getAllPostsUsingPagination();
     this.getRecentSubreddits();
   }
 
   posts: Post[] = [];
   isLogin: boolean = this._auth.isLogin;
   recentSubreddits: Subreddit[] = [];
+  page: number = 1;
 
   getAllPosts(): void {
     this.postsService.getAllPosts().subscribe((posts) => {
@@ -32,9 +33,23 @@ export class FeedContainerComponent implements OnInit {
     });
   }
 
+  getAllPostsUsingPagination(): void {
+    this.postsService
+      .getAllPostsUsingPagination(String(this.page), '4')
+      .subscribe((posts) => {
+        this.posts = this.posts.concat(posts);
+      });
+  }
+
   getRecentSubreddits(): void {
     this._subredditsService.getRecentSubreddits(10).subscribe((subreddits) => {
       this.recentSubreddits = subreddits;
     });
+  }
+
+  onScroll() {
+    console.log("GETTING NEW PAGE")
+    this.page++;
+    this.getAllPostsUsingPagination();
   }
 }

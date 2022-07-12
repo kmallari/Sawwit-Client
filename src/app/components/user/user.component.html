@@ -1,5 +1,12 @@
 <!-- <app-sidebar-left class="col"></app-sidebar-left> -->
-<div class="w-100 container mt-5">
+<div
+  class="w-100 container mt-5"
+  class="w-100 container mt-5"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="150"
+  (scrolled)="onScroll()"
+>
   <div class="row">
     <div class="col-12 col-lg-8 d-flex flex-column gap-4">
       <div
@@ -9,6 +16,7 @@
         <app-create-post-cta></app-create-post-cta>
       </div>
       <app-posts-list [posts]="posts"></app-posts-list>
+      <div class="card p-4"><p class="m-0">You've reached the end!</p></div>
     </div>
 
     <div *ngIf="userInPage" class="d-none col-4 d-lg-flex flex-column gap-4">

@@ -1,14 +1,18 @@
 <div class="container mt-5 pt-lg-5">
   <div class="card">
+    <div *ngIf="user">
+      <img
+        src="{{ user.profilePicture }}"
+        alt="{{ user.username }}-profile-picture"
+        class="profile-picture"
+      />
+    </div>
     <form
       class="mb-3"
       [formGroup]="updateUserForm"
       (ngSubmit)="updateUser(updateUserForm)"
     >
-      <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label"
-          >Change email address</label
-        >
+      <div class="mb-3 form-floating">
         <input
           type="email"
           class="form-control"
@@ -16,11 +20,11 @@
           placeholder="name@example.com"
           formControlName="email"
         />
-      </div>
-      <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label"
-          >Change password address</label
+          >New Email Address (optional)</label
         >
+      </div>
+      <div class="mb-3 form-floating">
         <input
           type="password"
           class="form-control"
@@ -28,8 +32,13 @@
           placeholder="NewPassword123!"
           formControlName="password"
         />
+        <label for="exampleFormControlInput1" class="form-label">
+          New Password (optional)
+        </label>
       </div>
-      <label for="formFile" class="form-label">Change profile picture</label>
+      <label for="formFile" class="form-label"
+        >Change profile picture (optional)</label
+      >
 
       <input
         class="form-control"

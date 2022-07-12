@@ -27,6 +27,7 @@ export class SearchBarComponent implements OnInit {
     if (!this.fromNavbar) {
       this.placeHolder = 'Where would you like to post?';
     }
+    this.getRecentSubreddits();
     this.searchTerms
       .pipe(
         // wait 300ms after each keystroke before considering the term
@@ -48,6 +49,7 @@ export class SearchBarComponent implements OnInit {
     new EventEmitter<Subreddit>();
   @Output() onClearSubreddit: EventEmitter<any> = new EventEmitter<any>();
   searchedSubreddits: Subreddit[] = [];
+  recentSubreddits: Subreddit[] = [];
   selectedSubreddit?: Subreddit;
   placeHolder: string = 'Search subsawwits';
 
@@ -59,6 +61,9 @@ export class SearchBarComponent implements OnInit {
   @HostListener('document:click')
   clickedOut() {
     this.showSearchResults = this.inside ? true : false;
+    if (this.selectedSubreddit) {
+      this.showSearchResults = false;
+    }
     this.inside = false;
   }
 
@@ -74,12 +79,23 @@ export class SearchBarComponent implements OnInit {
       this.searchedSubreddits = subreddits;
       // console.log('SEARCHED SUBREDDITS', this.searchedSubreddits);
     });
+    if (!term) {
+      this.searchedSubreddits = this.recentSubreddits;
+    }
+  }
+
+  getRecentSubreddits(): void {
+    this._subredditsService.getRecentSubreddits(8).subscribe((subreddits) => {
+      this.recentSubreddits = subreddits;
+      this.searchedSubreddits = this.recentSubreddits;
+    });
   }
 
   onClick(subreddit: string): void {
     if (this.fromNavbar) {
       this._router.navigate(['/s/' + subreddit]);
       this.searchTerms.next('');
+      // window.location.reload();
     } else {
       this.selectedSubreddit = this.searchedSubreddits.find(
         (sub) => sub.name === subreddit

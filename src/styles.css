@@ -5,6 +5,7 @@
   --primary: #c83e4d;
   --primary-hover: #d8505e;
   --secondary: #449be2;
+  --secondary-hover: #569ce3;
   --dark-primary: #252525;
   --dark-secondary: #333333;
   --dark-hover: #414141;
@@ -38,6 +39,7 @@ button:focus {
   width: 40px;
   height: 40px;
   margin-right: 1em;
+  border-radius: 50%;
 }
 
 a {
@@ -129,6 +131,7 @@ a:hover {
 .profile-picture {
   max-height: 20px;
   max-width: 20px;
+  border-radius: 50%;
 }
 
 .booody {
@@ -162,7 +165,6 @@ textarea {
 
 .vote-btn {
   padding: 0;
-  mading: 0;
   background: none;
   border: none;
   outline: none;

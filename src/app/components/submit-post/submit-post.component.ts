@@ -60,8 +60,13 @@ export class SubmitPostComponent implements OnInit {
           this.type
         )
         .subscribe((res: any) => {
+          console.log(res);
           this.postId = res.id;
-          this.router.navigate(['/s', form.value.subreddit, res.id]);
+          if (this.type === 2) {
+            this.router.navigate(['/s', form.value.subreddit, res.body.id]);
+          } else {
+            this.router.navigate(['/s', form.value.subreddit, res.id]);
+          }
         });
     }
   }

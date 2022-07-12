@@ -42,6 +42,7 @@ input:focus {
 .card {
   cursor: default;
   max-height: fit-content;
+  padding: 2em;
 }
 
 .bi-search,

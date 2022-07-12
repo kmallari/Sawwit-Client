@@ -7,8 +7,28 @@
       <app-posts-list [posts]="posts"></app-posts-list>
     </div>
 
-    <app-create-subreddit
-      class="d-none col-4 d-lg-inline"
-    ></app-create-subreddit>
+    <div class="d-none col-4 d-lg-flex flex-column gap-4">
+      <app-create-subreddit *ngIf="isLogin"></app-create-subreddit>
+      <div class="card recent-subreddits">
+        <h4 class="recently-created-header">Recently created subsawwits</h4>
+        <ul class="subreddit-list">
+          <li
+            class="subreddit d-flex flex-row align-items-center gap-3"
+            *ngFor="let s of recentSubreddits"
+            [routerLink]="['/s/', s.name]"
+          >
+            <img
+              class="subreddit-icon-small"
+              src="{{ s.icon }}"
+              alt="{{ s.name }}"
+            />
+            <div class="d-flex flex-column">
+              <div class="subreddit-name-list">{{ s.name }}</div>
+              <div class="post-count">Posts: {{ s.postCount }}</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>

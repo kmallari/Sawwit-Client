@@ -27,6 +27,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { MakeCommentComponent } from './components/make-comment/make-comment.component';
 import { CreatePostCtaComponent } from './components/create-post-cta/create-post-cta.component';
 import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component';
+import { UpdateSubredditComponent } from './components/update-subreddit/update-subreddit.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,6 +50,7 @@ import { UpdateUserProfileComponent } from './components/update-user-profile/upd
     MakeCommentComponent,
     CreatePostCtaComponent,
     UpdateUserProfileComponent,
+    UpdateSubredditComponent,
   ],
   imports: [
     BrowserModule,

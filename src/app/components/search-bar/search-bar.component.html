@@ -11,9 +11,7 @@
         src="{{ selectedSubreddit.icon }}"
         alt="{{ selectedSubreddit.name }}"
       />
-      <p>
-        s/{{ selectedSubreddit.name }}
-      </p>
+      <p>s/{{ selectedSubreddit.name }}</p>
     </div>
     <i class="bi bi-x-circle" (click)="clearSelectedSubreddit()"></i>
   </div>
@@ -40,7 +38,7 @@
       >
         <img
           src="{{ subreddit.icon }}"
-          alt=""
+          alt="{{ subreddit.name }}"
           class="subreddit-icon ms-3 ms-lg-4"
         />
         <a>s/{{ subreddit.name }}</a>

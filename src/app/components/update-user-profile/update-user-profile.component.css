@@ -1,3 +1,10 @@
 .card {
   max-height: fit-content;
+  padding: 2em;
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 840px;
+  }
 }

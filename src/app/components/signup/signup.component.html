@@ -34,7 +34,7 @@
     <div class="form-floating mt-2 mb-2">
       <input
         type="email"
-        class="form-control"
+        class="form-control {{ invalidEmail ? 'error-border' : '' }}"
         id="floatingInput"
         placeholder="name@example.com"
         formControlName="email"
@@ -53,7 +53,7 @@
     <div class="form-floating mt-2 mb-2">
       <input
         type="password"
-        class="form-control"
+        class="form-control {{ invalidPassword ? 'error-border' : '' }}"
         id="floatingPassword"
         placeholder="Password"
         formControlName="password"

@@ -27,7 +27,7 @@ input:focus {
   outline: none;
 }
 
-button {
+.create-subreddit-btn {
   font-size: small;
   background-color: var(--primary);
   border: none;
@@ -36,5 +36,9 @@ button {
   color: var(--light-primary);
   font-size: small;
   padding: 0.8em 1em;
-  border-radius: 0.4em;
+  border-radius: 100em;
+}
+
+.create-subreddit-btn:hover {
+  background-color: var(--primary-hover);
 }

@@ -115,10 +115,6 @@ export class PostsService {
       formData.append('subreddit', subreddit);
       formData.append('type', '2');
 
-      for (let pair of formData) {
-        console.log(pair);
-      }
-
       return this.http
         .post<Post>(this.url + '/submit', formData, {
           reportProgress: true,

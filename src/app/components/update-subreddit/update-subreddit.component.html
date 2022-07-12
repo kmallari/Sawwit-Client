@@ -1,0 +1,32 @@
+<div class="container card">
+  <div class="container">
+    <form
+      class="mb-3"
+      [formGroup]="updateSubredditForm"
+      (ngSubmit)="updateSubreddit(updateSubredditForm)"
+    >
+      <label for="exampleFormControlInput1" class="form-label"
+        >Change Description</label
+      >
+      <textarea
+        autosize
+        type="email"
+        class="form-control"
+        id="exampleFormControlInput1"
+        placeholder="name@example.com"
+        formControlName="description"
+      ></textarea>
+
+      <label for="formFile" class="form-label">Change profile picture</label>
+      <input
+        class="form-control"
+        type="file"
+        id="formFile"
+        accept="image/png, image/jpeg"
+        #fileInput
+        (change)="onFileChange($event)"
+      />
+      <button type="submit">Update profile</button>
+    </form>
+  </div>
+</div>

@@ -10,6 +10,31 @@
       </div>
       <app-posts-list [posts]="posts"></app-posts-list>
     </div>
-    <!-- <app-sidebar-right class="col d-none d-lg-inline"></app-sidebar-right> -->
+
+    <div *ngIf="userInPage" class="d-none col-4 d-lg-flex flex-column gap-4">
+      <div class="card">
+        <div class="header"></div>
+        <img
+          class="user-profile-picture"
+          src="{{ userInPage.profilePicture }}"
+          alt=""
+        />
+        <div class="d-flex flex-row align-items-center gap-2 mx-auto my-4">
+          <h5 class="username">u/{{ userInPage.username }}</h5>
+          <i class="bi bi-dot"></i>
+          <span class="account-age">{{
+            getTimeAgo(userInPage.createdAt)
+          }}</span>
+        </div>
+        <hr />
+        <div class="my-4 mx-auto d-flex flex-column align-items-center">
+          <h6>Balloon day</h6>
+          <div class="d-flex flex-row gap-2 balloon-day">
+            <i class="bi bi-balloon"></i>
+            <span>{{ getBalloonDay(userInPage.createdAt) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

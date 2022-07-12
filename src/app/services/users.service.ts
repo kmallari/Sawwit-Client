@@ -35,11 +35,11 @@ export class UsersService {
     // };
   }
 
-  register(
+  register = (
     email: string,
     username: string,
     password: string
-  ): Observable<RegisteredUser> {
+  ): Observable<RegisteredUser> => {
     // expected yung return ng server
     return this.http
       .post<RegisteredUser>( // tama yung type nito
@@ -58,9 +58,9 @@ export class UsersService {
         // if dito lang sa service yung error handling, mahirap itransfer sa ui yung error
         // catchError(this.handleError<RegisteredUser>('register'))
       );
-  }
+  };
 
-  login(loginInfo: string, password: string): Observable<LoginUser> {
+  login = (loginInfo: string, password: string): Observable<LoginUser> => {
     // console.log('serivce', loginInfo, password);
     return this.http
       .post<LoginUser>(
@@ -74,14 +74,37 @@ export class UsersService {
         }),
         catchError(this.handleError)
       );
-  }
+  };
 
-  getUserInfo(id: string): Observable<User> {
+  getUserInfo = (id: string): Observable<User> => {
     return this.http.get<User>(this.url + '/' + id).pipe(
       tap((_) => {
         // console.log('TAP', _);
       }),
       catchError(this.handleError)
     );
-  }
+  };
+
+  updateUser = (
+    id: string,
+    body: { email?: string; password?: string; profilePicture?: File }
+  ): Observable<any> => {
+    const formData = new FormData();
+
+    for (let key in body) {
+      formData.append(key, (body as any)[key]);
+    }
+
+    return this.http
+      .patch(this.url + '/' + id, formData, {
+        reportProgress: true,
+        observe: 'events',
+      })
+      .pipe(
+        tap((_) => {
+          // console.log('TAP', _);
+        }),
+        catchError(this.handleError)
+      );
+  };
 }

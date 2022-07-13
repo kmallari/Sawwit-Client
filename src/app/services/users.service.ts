@@ -102,7 +102,7 @@ export class UsersService {
       })
       .pipe(
         tap((_) => {
-          // console.log('TAP', _);
+          console.log('TAP', _);
         }),
         catchError(this.handleError)
       );

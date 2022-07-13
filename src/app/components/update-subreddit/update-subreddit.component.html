@@ -1,15 +1,18 @@
 <div class="container card d-flex flex-md-row gap-lg-5 gap-3">
-  <a
+  <div
     class="container d-flex flex-auto gap-4 align-items-start"
     *ngIf="subreddit"
-    [routerLink]="['/s', subreddit.name]"
   >
     <img class="subreddit-icon" src="{{ subreddit.icon }}" alt="" />
     <div class="d-flex flex-column gap-2">
-      <h5>{{ subreddit.name }}</h5>
-      <p class="description">{{ description }}</p>
+      <h5 class="d-flex flex-column flex-sm-row justify-content-start gap-2">
+        <span class="label">Name: </span>{{ subreddit.name }}
+      </h5>
+      <p class="description d-flex flex-column justify-content-start gap-2">
+        <span class="label">Description: </span>{{ description }}
+      </p>
     </div>
-  </a>
+  </div>
   <span class="line"></span>
   <div class="container">
     <form

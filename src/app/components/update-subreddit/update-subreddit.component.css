@@ -120,3 +120,14 @@ a:hover {
   text-decoration: none;
   color: inherit;
 }
+
+.label {
+  background-color: var(--dark-secondary);
+  padding: 0.2em 0.8em;
+  border-radius: 0.4em;
+  font-size: 0.8rem;
+  color: var(--light-primary);
+  font-weight: 600;
+  margin-right: 0.6em;
+  width: fit-content;
+}

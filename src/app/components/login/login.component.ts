@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
         .subscribe(
           (res: any) => {
             // console.log('RESULT: ', res.token);
-            console.log('res', res);
             if (res.token) {
               this._auth.setDataInCookies('userData', JSON.stringify(res.data));
               this._auth.setDataInCookies('token', res.token);

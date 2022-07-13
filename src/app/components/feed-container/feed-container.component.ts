@@ -35,7 +35,7 @@ export class FeedContainerComponent implements OnInit {
 
   getAllPostsUsingPagination(): void {
     this.postsService
-      .getAllPostsUsingPagination(String(this.page), '4')
+      .getAllPostsUsingPagination(String(this.page), '10')
       .subscribe((posts) => {
         this.posts = this.posts.concat(posts);
       });

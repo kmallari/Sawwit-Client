@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 import { User } from 'src/app/models/user.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -13,29 +15,34 @@ export class UpdateUserProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _usersService: UsersService,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _route: ActivatedRoute
   ) {
     this.updateUserForm = this.fb.group({
       email: new FormControl(''),
       password: new FormControl(''),
       profilePicture: new FormControl(''),
     });
+    this.id = this._route.snapshot.params['userId'];
   }
 
   ngOnInit(): void {
-    this.user = this._auth.loggedInUser;
+    this.getUserInfo();
     console.log('USER', this.user);
   }
 
   updateUserForm: FormGroup;
   newProfilePicture?: File;
   user?: User;
-  // for clearing the file input
+  imageUploadPlaceholder: string = 'Upload a new icon (Optional)';
+  id: string;
+
   @ViewChild('fileInput', { static: false })
   InputVar?: ElementRef;
 
   onFileChange(event: any) {
     this.newProfilePicture = event.target.files.item(0);
+    this.imageUploadPlaceholder = event.target.files.item(0).name;
   }
 
   updateUser = (form: FormGroup) => {
@@ -63,16 +70,33 @@ export class UpdateUserProfileComponent implements OnInit {
       if (this._auth.loggedInUser) {
         this._usersService
           .updateUser(this._auth.loggedInUser.id, fieldsToUpdate)
-          .subscribe((res: any) => {
-            form.reset();
-            this.resetFileInput();
-            console.log(res);
-          });
+          .subscribe(
+            (res: any) => {
+              console.log('res', res);
+
+              form.reset();
+              this.resetFileInput();
+              // window.location.reload();
+            },
+            (error) => {
+              console.error(error);
+            }
+          );
       }
     }
   };
 
+  getUserInfo = (): void => {
+    this._usersService.getUserInfo(this.id).subscribe((res: any) => {
+      this.user = res;
+    });
+  };
+
   resetFileInput() {
     if (this.InputVar) this.InputVar.nativeElement.value = '';
+  }
+
+  getBalloonDay(date: number): string {
+    return moment(date).format('MMMM Do, YYYY');
   }
 }

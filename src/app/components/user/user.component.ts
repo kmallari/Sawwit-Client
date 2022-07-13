@@ -42,7 +42,7 @@ export class UserComponent implements OnInit {
 
   getUserPostsUsingPagination = () => {
     this.postsService
-      .getUserPostsUsingPagination(this.userId, String(this.page), '4')
+      .getUserPostsUsingPagination(this.userId, String(this.page), '10')
       .subscribe((posts) => {
         console.log(posts);
         this.posts = this.posts.concat(posts);

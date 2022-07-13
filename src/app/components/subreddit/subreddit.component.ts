@@ -44,7 +44,7 @@ export class SubredditComponent implements OnInit {
       .getSubredditPostsUsingPagination(
         this.subredditName,
         String(this.page),
-        '4'
+        '10'
       )
       .subscribe((posts) => {
         console.log(posts);

@@ -8,7 +8,7 @@
   </button>
   <h3>Sign up.</h3>
   <p>Signup to start using sawwit.</p>
-  <form [formGroup]="signupForm" (ngSubmit)="signupUser(signupForm)">
+  <form [formGroup]="signupForm" (ngSubmit)="onFormSubmit(signupForm)">
     <div class="form-floating mt-2 mb-2">
       <input
         type="text"

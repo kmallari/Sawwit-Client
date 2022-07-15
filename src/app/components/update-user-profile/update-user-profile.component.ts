@@ -74,9 +74,22 @@ export class UpdateUserProfileComponent implements OnInit {
             (res: any) => {
               console.log('res', res);
 
-              form.reset();
-              this.resetFileInput();
-              // window.location.reload();
+              // if (this.user) {
+              //   if (fieldsToUpdate.email) {
+              //     this.user.email = fieldsToUpdate.email;
+              //   }
+              //   if (fieldsToUpdate.profilePicture) {
+              //     this.user.profilePicture =
+              //       res.body.updatedFields.profilePicture;
+              //   }
+              // }
+
+              // this._auth.setDataInCookies('userData', this.user);
+
+              // form.reset();
+              // this.resetFileInput();
+
+              window.location.reload();
             },
             (error) => {
               console.error(error);

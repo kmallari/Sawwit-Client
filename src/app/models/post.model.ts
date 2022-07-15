@@ -6,6 +6,7 @@ export interface Post {
   body: string;
   image: string;
   url: string;
+  linkPreview: string;
   subreddit: string;
   subredditIcon: string;
   createdAt: number;
@@ -13,4 +14,5 @@ export interface Post {
   downvotes: number;
   commentsCount: number;
   type: number;
+  myVote: number;
 }

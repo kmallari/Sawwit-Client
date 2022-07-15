@@ -75,11 +75,12 @@ export class SearchBarComponent implements OnInit {
   }
 
   getSearched(term: string): void {
-    this._subredditsService.searchSubreddit(term).subscribe((subreddits) => {
-      this.searchedSubreddits = subreddits;
-      // console.log('SEARCHED SUBREDDITS', this.searchedSubreddits);
-    });
-    if (!term) {
+    if (term) {
+      this._subredditsService.searchSubreddit(term).subscribe((subreddits) => {
+        this.searchedSubreddits = subreddits;
+        // console.log('SEARCHED SUBREDDITS', this.searchedSubreddits);
+      });
+    } else {
       this.searchedSubreddits = this.recentSubreddits;
     }
   }

@@ -41,14 +41,23 @@ export class CommentsService {
   //   );
   // }
 
-  getParentComments(postId: string): Observable<Comment[]> {
-    return this.http.get<Comment[]>(this.url + postId + '/parentComments/');
+  getParentComments(
+    postId: string,
+    loggedInUserId: string
+  ): Observable<Comment[]> {
+    return this.http.get<Comment[]>(
+      this.url + postId + `/parentComments?loggedInUserId=${loggedInUserId}`
+    );
   }
 
-  getNextComments(postId: string, parentId: string): Observable<Comment[]> {
+  getNextComments(
+    postId: string,
+    parentId: string,
+    loggedInUserId: string
+  ): Observable<Comment[]> {
     return this.http
       .get<Comment[]>(
-        this.url + postId + '/comments/next' + `?parentId=${parentId}`
+        this.url + postId + '/comments/next' + `?parentId=${parentId}&loggedInUserId=${loggedInUserId}`
       )
       .pipe(
         tap((_) => {

@@ -24,15 +24,32 @@
       </div>
     </div>
   </div>
-  <h3 class="post-title">{{ postData.title }}</h3>
+  <div class="d-flex flex-row gap-3 justify-content-between w-100">
+    <h3 class="post-title">{{ postData.title }}</h3>
+    <a
+      *ngIf="postData.type === 3"
+      class="link-preview d-none d-md-inline position-relative image-preview"
+      href="{{ postData.url }}"
+      target="_blank"
+      (click)="stopPropagation($event)"
+    >
+      <img src="{{ postData.linkPreview }}" class="image-in-preview" />
+      <div class="position-absolute link-icon">
+        <i class="bi bi-box-arrow-up-left"></i>
+      </div>
+    </a>
+  </div>
+
+  <!-- FOR TEXT (TYPE 1) -->
   <p
+    *ngIf="postData.type === 1"
     style="white-space: pre-line"
     class="post-body {{ !revealFullContent ? 'clip-text' : 'no-clip' }}"
-    *ngIf="postData.type === 1"
   >
     {{ postData.body }}
   </p>
 
+  <!-- FOR IMAGES (TYPE 2) -->
   <div
     *ngIf="postData.type === 2"
     class="d-flex mb-2 position-relative {{
@@ -40,7 +57,9 @@
     }}"
   >
     <img
-      class="{{ revealFullContent ? 'img-fluid' : 'small-image img-fluid' }} mx-auto"
+      class="{{
+        revealFullContent ? 'img-fluid' : 'small-image img-fluid'
+      }} mx-auto"
       [src]="postData.image"
       [alt]="postData.title"
       height="200px"
@@ -48,16 +67,32 @@
     <div class="view-image-prompt">Click to view full image</div>
   </div>
 
-  <div class="d-flex justify-content-between align-items-center">
+  <!-- FOR URLS (TYPE 3) -->
+  <a
+    *ngIf="postData.type === 3"
+    class="mb-2 url"
+    href="{{ postData.url }}"
+    target="_blank"
+    (click)="stopPropagation($event)"
+    >{{
+      postData.url.length > 48
+        ? (postData.url | slice: 0:48) + "..."
+        : postData.url
+    }}</a
+  >
+
+  <div class="d-flex justify-content-between align-items-center w-100">
     <div class="d-flex flex-row align-items-center gap-2">
       <button (click)="votePost($event, 1)" class="vote-btn">
-        <i class="bi bi-caret-up-fill"></i>
+        <i class="bi bi-caret-up-fill {{ vote === 1 ? 'upvoted' : '' }}"></i>
       </button>
       <span class="vote-count">{{
         postData.upvotes - postData.downvotes + vote
       }}</span>
       <button (click)="votePost($event, -1)" class="vote-btn">
-        <i class="bi bi-caret-down-fill"></i>
+        <i
+          class="bi bi-caret-down-fill {{ vote === -1 ? 'downvoted' : '' }}"
+        ></i>
       </button>
     </div>
     <div class="comments">{{ postData.commentsCount }} comments</div>

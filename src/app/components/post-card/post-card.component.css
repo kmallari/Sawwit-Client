@@ -33,11 +33,11 @@
 }
 
 .card-limited-height {
-  max-height: 300px;
+  max-height: 400px;
 }
 
 .card-image {
-  max-height: 560px;
+  max-height: 590px;
 }
 
 .card-fit-content {
@@ -48,7 +48,7 @@
   min-width: auto;
   min-height: 100%;
   object-fit: cover;
-  object-position: 100% 0;
+  object-position: 50% 50%;
 }
 
 .full-image {
@@ -101,4 +101,41 @@
 
 .view-image-prompt:hover {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.url {
+  font-size: smaller;
+  width: fit-content;
+  color: var(--secondary);
+}
+
+.link-preview {
+  border-radius: 0.4em;
+  height: 80px;
+  width: 80px;
+}
+
+.image-in-preview {
+  outline: 2px solid var(--light-primary);
+  height: 80px;
+  width: 80px;
+  border-radius: 0.4em;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transition: 0.1s ease-in-out;
+}
+
+.image-in-preview:hover {
+  outline: 3px solid var(--light-primary);
+
+}
+
+.link-icon {
+  background-color: var(--light-primary);
+  color: var(--secondary);
+  padding: 0.4em;
+  bottom: 0;
+  right: 0;
+  font-size: small;
+  border-radius: 0.4em 0em 0.4em 0em;
 }

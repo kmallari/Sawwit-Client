@@ -33,16 +33,18 @@ export class UserComponent implements OnInit {
   userId = String(this.route.snapshot.paramMap.get('userId'));
   page: number = 1;
 
-  getUserPosts = () => {
-    this.postsService.getUserPosts(this.userId).subscribe((posts) => {
-      this.posts = posts;
-      // console.log('THIS POSTS', this.posts);
-    });
-  };
+  // getUserPosts = () => {
+  //   this.postsService.getUserPosts(this.userId).subscribe((posts) => {
+  //     this.posts = posts;
+  //     // console.log('THIS POSTS', this.posts);
+  //   });
+  // };
 
   getUserPostsUsingPagination = () => {
+    const userId = this.loggedInUser ? this.loggedInUser.id : 'xxx';
+
     this.postsService
-      .getUserPostsUsingPagination(this.userId, String(this.page), '10')
+      .getUserPostsUsingPagination(this.userId, String(this.page), '10', userId)
       .subscribe((posts) => {
         console.log(posts);
         this.posts = this.posts.concat(posts);

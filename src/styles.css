@@ -5,7 +5,7 @@
   --primary: #c83e4d;
   --primary-hover: #d8505e;
   --secondary: #449be2;
-  --secondary-hover: #569ce3;
+  --secondary-hover: #2588eb;
   --dark-primary: #252525;
   --dark-secondary: #333333;
   --dark-hover: #414141;
@@ -84,7 +84,7 @@ a:hover {
 }
 
 .post-title {
-  font-size: 1.4em;
+  font-size: 1.2em;
   font-weight: 600;
   color: var(--light-primary);
 }
@@ -92,6 +92,10 @@ a:hover {
 .vote-count {
   letter-spacing: 0.1em;
   font-weight: 600;
+  width: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .comments {
@@ -178,4 +182,24 @@ textarea {
   border: none;
   outline: none;
   box-shadow: none;
+}
+
+.upvoted {
+  background-color: var(--primary);
+}
+
+.upvoted:hover {
+  background-color: var(--primary-hover);
+}
+
+.downvoted {
+  background-color: var(--secondary);
+}
+
+.downvoted:hover {
+  background-color: var(--secondary-hover);
+}
+
+.image-preview {
+  top: -60px;
 }

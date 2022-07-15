@@ -41,12 +41,16 @@ export class SubmitPostComponent implements OnInit {
   imageUploadPlaceholder: string = 'Click here to upload an image.';
   imageToUpload?: File;
   type: number = 1;
+  currentTitle: string = '';
+  currentBody: string = '';
 
   createPost(form: FormGroup) {
     console.log(form.value.image);
 
     if (this.user && this.selectedSubreddit) {
       form.value.subreddit = this.selectedSubreddit.name;
+
+      console.log(form.value);
 
       this.postsService
         .createPost(

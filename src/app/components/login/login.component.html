@@ -4,7 +4,7 @@
   </button>
   <h3>Log In.</h3>
   <p>Login to enter sawwit.</p>
-  <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm)">
+  <form [formGroup]="loginForm" (ngSubmit)="onFormSubmit(loginForm)">
     <div class="form-floating d-flex flex-row">
       <input
         type="email"

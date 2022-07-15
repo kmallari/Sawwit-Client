@@ -8,7 +8,15 @@ import { Post } from '../../models/post.model';
 })
 export class PostsListComponent implements OnInit {
   @Input() posts: Post[] = [];
-  constructor(private postsService: PostsService) {}
+  constructor(private _postsService: PostsService) {}
 
   ngOnInit(): void {}
+
+  votePost(event: { postId: string; userId: string; vote: number }): void {
+    this._postsService
+      .votePost(event.postId, event.userId, event.vote)
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
 }

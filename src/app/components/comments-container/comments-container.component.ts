@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/user.model';
 import { Comment } from '../../models/comment.model';
 import { CommentsService } from '../../services/comments.service';
 
@@ -8,15 +10,19 @@ import { CommentsService } from '../../services/comments.service';
   styleUrls: ['./comments-container.component.css'],
 })
 export class CommentsContainerComponent implements OnInit {
-  comments: Comment[] = [];
-  @Input() postId: string = '';
-
-  constructor(private commentsService: CommentsService) {}
+  constructor(
+    private _commentsService: CommentsService,
+    private _auth: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.getParentComments();
     // after nito, this.comments = array
   }
+
+  comments: Comment[] = [];
+  @Input() postId: string = '';
+  loggedInUser?: User = this._auth.loggedInUser;
 
   addComments(comments: Comment[], parentId: string): void {
     const parentIndex = this.comments.findIndex(
@@ -26,8 +32,10 @@ export class CommentsContainerComponent implements OnInit {
   }
 
   getParentComments(): void {
-    this.commentsService
-      .getParentComments(this.postId)
+    const userId = this.loggedInUser ? this.loggedInUser.id : 'x';
+
+    this._commentsService
+      .getParentComments(this.postId, userId)
       .subscribe((comments) => {
         this.comments = comments;
 
@@ -50,20 +58,18 @@ export class CommentsContainerComponent implements OnInit {
       });
   }
 
-  getNextComments(args: {
-    postId: string;
-    parentId: string;
-    isFirstRun: boolean;
-  }): void {
+  getNextComments(event: { postId: string; parentId: string }): void {
     // yung parent na kinukuhanan ng subcoments, pwedeng imutate para yung revealChildren = true
-    this.commentsService
-      .getNextComments(args.postId, args.parentId)
+    const userId = this.loggedInUser ? this.loggedInUser.id : 'x';
+
+    this._commentsService
+      .getNextComments(event.postId, event.parentId, userId)
       .subscribe((comments) => {
-        this.addComments(comments, args.parentId);
+        this.addComments(comments, event.parentId);
       });
   }
 
-  createComment(args: {
+  createComment(event: {
     userId: string;
     username: string;
     parentId: string;
@@ -72,35 +78,48 @@ export class CommentsContainerComponent implements OnInit {
     parentLevel: number;
   }): void {
     console.log(
-      args.userId,
-      args.username,
-      args.parentId,
-      args.content,
-      args.postId,
-      args.parentLevel
+      event.userId,
+      event.username,
+      event.parentId,
+      event.content,
+      event.postId,
+      event.parentLevel
     );
 
     if (
-      args.userId &&
-      args.username &&
-      args.parentId &&
-      args.content &&
-      args.postId &&
-      args.parentLevel !== undefined
+      event.userId &&
+      event.username &&
+      event.parentId &&
+      event.content &&
+      event.postId &&
+      event.parentLevel !== undefined
     ) {
-      this.commentsService
+      this._commentsService
         .createComment(
-          args.userId,
-          args.username,
-          args.parentId,
-          args.content,
-          args.postId,
-          args.parentLevel
+          event.userId,
+          event.username,
+          event.parentId,
+          event.content,
+          event.postId,
+          event.parentLevel
         )
         .subscribe((comment) => {
           console.log(comment);
-          this.addComments([comment], args.parentId);
+          this.addComments([comment], event.parentId);
         });
     }
+  }
+
+  voteComment(event: {
+    postId: string;
+    commentId: string;
+    userId: string;
+    vote: number;
+  }): void {
+    this._commentsService
+      .voteComment(event.postId, event.commentId, event.userId, event.vote)
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 }

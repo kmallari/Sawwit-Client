@@ -5,6 +5,7 @@ import { SubredditsService } from 'src/app/services/subreddits.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subreddit } from 'src/app/models/subreddit.model';
 import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/user.model';
 @Component({
   selector: 'app-subreddit',
   templateUrl: './subreddit.component.html',
@@ -29,22 +30,26 @@ export class SubredditComponent implements OnInit {
   subredditName: string;
   subreddit?: Subreddit; // NEED TO PASS THIS INTO SUBMIT -> SEARCH
   isLogin: boolean = this._auth.isLogin;
+  loggedInUser?: User = this._auth.loggedInUser;
   page: number = 1;
 
-  getSubredditPosts = () => {
-    this.postsService
-      .getSubredditPosts(this.subredditName)
-      .subscribe((posts) => {
-        this.posts = posts;
-      });
-  };
+  // getSubredditPosts = () => {
+  //   this.postsService
+  //     .getSubredditPosts(this.subredditName)
+  //     .subscribe((posts) => {
+  //       this.posts = posts;
+  //     });
+  // };
 
   getSubredditPostsUsingPagination = () => {
+    const userId = this.loggedInUser ? this.loggedInUser.id : 'xxx';
+
     this.postsService
       .getSubredditPostsUsingPagination(
         this.subredditName,
         String(this.page),
-        '10'
+        '10',
+        userId
       )
       .subscribe((posts) => {
         console.log(posts);

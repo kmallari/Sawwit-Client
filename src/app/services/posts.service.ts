@@ -38,22 +38,24 @@ export class PostsService {
     };
   }
 
-  getAllPosts(): Observable<Post[]> {
-    return this.http.get<Post>(this.url).pipe(
-      tap((_) => {
-        // console.log(_);
-      }),
-      catchError(this.handleError<any>('getAllPosts'))
-    );
-  }
+  // getAllPosts(): Observable<Post[]> {
+  //   return this.http.get<Post>(this.url).pipe(
+  //     tap((_) => {
+  //       // console.log(_);
+  //     }),
+  //     catchError(this.handleError<any>('getAllPosts'))
+  //   );
+  // }
 
   getAllPostsUsingPagination(
     page: string,
-    itemsPerPage: string
+    itemsPerPage: string,
+    loggedInUserId: string
   ): Observable<Post[]> {
     return this.http
       .get<Post[]>(
-        this.url + `/pagination?page=${page}&itemsPerPage=${itemsPerPage}`
+        this.url +
+          `/pagination?page=${page}&itemsPerPage=${itemsPerPage}&loggedInUserId=${loggedInUserId}`
       )
       .pipe(
         tap((_) => {
@@ -66,17 +68,13 @@ export class PostsService {
   getSubredditPostsUsingPagination(
     subredditName: string,
     page: string,
-    itemsPerPage: string
+    itemsPerPage: string,
+    loggedInUserId: string
   ): Observable<Post[]> {
     return this.http
       .get<Post[]>(
         this.url +
-          '/subreddit/' +
-          subredditName +
-          '/pagination?page=' +
-          page +
-          '&itemsPerPage=' +
-          itemsPerPage
+          `/subreddit/${subredditName}/pagination?page=${page}&itemsPerPage=${itemsPerPage}&loggedInUserId=${loggedInUserId}`
       )
       .pipe(
         tap((_) => {
@@ -89,17 +87,13 @@ export class PostsService {
   getUserPostsUsingPagination(
     userId: string,
     page: string,
-    itemsPerPage: string
+    itemsPerPage: string,
+    loggedInUserId: string
   ): Observable<Post[]> {
     return this.http
       .get<Post[]>(
         this.url +
-          '/user/' +
-          userId +
-          '/pagination?page=' +
-          page +
-          '&itemsPerPage=' +
-          itemsPerPage
+          `/user/${userId}/pagination?page=${page}&itemsPerPage=${itemsPerPage}&loggedInUserId=${loggedInUserId}`
       )
       .pipe(
         tap((_) => {
@@ -109,33 +103,33 @@ export class PostsService {
       );
   }
 
-  getSubredditPosts(subredditName: string): Observable<Post[]> {
-    // is this legal??
-    return this.http
-      .get<Subreddit>('http://localhost:8080/subreddits/' + subredditName)
-      .pipe(
-        switchMap((subreddit) => {
-          const subredditName = subreddit.name;
-          return this.http
-            .get<Post[]>(this.url + '/subreddit/' + subredditName)
-            .pipe(
-              tap((_) => {
-                // console.log(_);
-              }),
-              catchError(this.handleError<any>('getSubredditPosts'))
-            );
-        })
-      );
-  }
+  // getSubredditPosts(subredditName: string): Observable<Post[]> {
+  //   // is this legal??
+  //   return this.http
+  //     .get<Subreddit>('http://localhost:8080/subreddits/' + subredditName)
+  //     .pipe(
+  //       switchMap((subreddit) => {
+  //         const subredditName = subreddit.name;
+  //         return this.http
+  //           .get<Post[]>(this.url + '/subreddit/' + subredditName)
+  //           .pipe(
+  //             tap((_) => {
+  //               // console.log(_);
+  //             }),
+  //             catchError(this.handleError<any>('getSubredditPosts'))
+  //           );
+  //       })
+  //     );
+  // }
 
-  getUserPosts(userId: string): Observable<Post[]> {
-    return this.http.get<Post[]>(this.url + '/user/' + userId).pipe(
-      tap((_) => {
-        // console.log(_);
-      }),
-      catchError(this.handleError<any>('getUserPosts'))
-    );
-  }
+  // getUserPosts(userId: string): Observable<Post[]> {
+  //   return this.http.get<Post[]>(this.url + '/user/' + userId).pipe(
+  //     tap((_) => {
+  //       // console.log(_);
+  //     }),
+  //     catchError(this.handleError<any>('getUserPosts'))
+  //   );
+  // }
 
   createPost(
     title: string,
@@ -211,13 +205,15 @@ export class PostsService {
     }
   }
 
-  getPost(id: string): Observable<Post> {
-    return this.http.get<Post>(this.url + '/' + id).pipe(
-      tap((_) => {
-        // console.log(_);
-      }),
-      catchError(this.handleError<any>('getPost'))
-    );
+  getPost(id: string, userId: string): Observable<Post> {
+    return this.http
+      .get<Post>(this.url + '/' + id + `?loggedInUserId=${userId}`)
+      .pipe(
+        tap((_) => {
+          // console.log(_);
+        }),
+        catchError(this.handleError<any>('getPost'))
+      );
   }
 
   votePost(postId: string, userId: string, vote: number): Observable<any> {

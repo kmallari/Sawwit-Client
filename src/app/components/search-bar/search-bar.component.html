@@ -27,7 +27,7 @@
     />
   </div>
   <div
-    *ngIf="searchedSubreddits.length > 0 && showSearchResults"
+    *ngIf="searchedSubreddits && searchedSubreddits.length > 0 && showSearchResults"
     class="position-absolute w-100 search-result-box"
   >
     <ul class="list-container">

@@ -12,4 +12,5 @@ export interface Comment {
   downvotes: number;
   childrenCount: number;
   isChildrenRevealed: boolean;
+  myVote: number;
 }

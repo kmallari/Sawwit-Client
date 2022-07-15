@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -15,16 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  isLogin: boolean = this._auth.isLogin;
-  errorMessage: any;
-  invalidLogin: boolean = false;
-  constructor(
-    private fb: FormBuilder,
-    private usersService: UsersService,
-    private _auth: AuthService,
-    private _router: Router
-  ) {
+  constructor(private fb: FormBuilder, private _auth: AuthService) {
     this.loginForm = this.fb.group({
       loginInfo: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
@@ -33,38 +24,27 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  loginUser(form: FormGroup) {
-    // mutate din yung isLogin sa _auth service dito
+  loginForm: FormGroup;
+  isLogin: boolean = this._auth.isLogin;
+  errorMessage: any;
+  invalidLogin: boolean = false;
+  @Output() onLoginUser: EventEmitter<any> = new EventEmitter();
+
+  onFormSubmit(form: FormGroup) {
     if (form.valid) {
-      this.usersService
-        .login(form.value.loginInfo, form.value.password)
-        .subscribe(
-          (res: any) => {
-            // console.log('RESULT: ', res.token);
-            if (res.token) {
-              this._auth.setDataInCookies('userData', JSON.stringify(res.data));
-              this._auth.setDataInCookies('token', res.token);
-              // this._router.navigate(['']);
-              window.location.reload();
-            } else {
-              this.invalidLogin = true;
-            }
-          },
-          (err) => {
-            console.error('ERROR!', err);
+      console.log('VALID FORM');
+      this.onLoginUser.emit({
+        loginForm: form,
+        callback: (token: string) => {
+          if (!token) {
             this.invalidLogin = true;
           }
-        );
-    } else {
-      console.log('no res');
-      this.invalidLogin = true;
+        },
+        errorCallback: (err: Error) => {
+          this.invalidLogin = true;
+        },
+      });
     }
-  }
-
-  logout() {
-    // mutate din yung isLogin sa _auth service dito
-    this._auth.clearStorage();
-    this._router.navigate(['']);
   }
 
   setInvalidLogin() {

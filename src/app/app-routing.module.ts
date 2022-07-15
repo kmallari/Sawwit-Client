@@ -17,6 +17,7 @@ const routes: Routes = [
   { path: 's/:subreddit/:postId', component: PostComponent },
   { path: 'u/:userId', component: UserComponent },
   { path: 'u/:userId/update', component: UpdateUserProfileComponent },
+
 ];
 
 @NgModule({

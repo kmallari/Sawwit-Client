@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import {
@@ -16,13 +16,6 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
-  isLogin: boolean = this._auth.isLogin;
-  signupForm: FormGroup;
-  invalidEmail: boolean = false;
-  invalidUsername: boolean = false;
-  invalidPassword: boolean = false;
-  errorMessage: string = '';
-
   constructor(
     private fb: FormBuilder,
     private usersService: UsersService,
@@ -39,40 +32,28 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  signupUser(form: FormGroup): void {
+  isLogin: boolean = this._auth.isLogin;
+  signupForm: FormGroup;
+  invalidEmail: boolean = false;
+  invalidUsername: boolean = false;
+  invalidPassword: boolean = false;
+  errorMessage: string = '';
+  @Output() onSignupUser: EventEmitter<any> = new EventEmitter();
+
+  onFormSubmit(form: FormGroup) {
     this.isValidEmail(form.value.email);
     this.isValidUsername(form.value.username);
     this.isValidPassword(form.value.password);
 
     if (!this.invalidEmail && !this.invalidUsername && !this.invalidPassword) {
       if (form.valid) {
-        this.usersService
-          .register(form.value.email, form.value.username, form.value.password)
-          // sa subscribe pwede maglagay ng error handler
-          .subscribe(
-            (res: any) => {
-              if (res.token) {
-                // console.log(res);
-                this._auth.setDataInCookies(
-                  'userData',
-                  JSON.stringify(res.data)
-                );
-                this._auth.setDataInCookies('token', res.token);
-                this._router.navigate(['/home']);
-                window.location.reload();
-              } else {
-                // console.log(res);
-                alert(res.msg);
-              }
-            },
-            (error) => {
-              console.log('ERROR!', error);
-              this.errorMessage = error.error.message;
-            }
-          );
+        this.onSignupUser.emit({
+          signupForm: form,
+          errorCallback: (err: any) => {
+            this.errorMessage = err.error.message;
+          },
+        });
       }
-    } else {
-      return;
     }
   }
 

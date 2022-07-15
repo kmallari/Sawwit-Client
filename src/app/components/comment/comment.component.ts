@@ -21,6 +21,16 @@ export class CommentComponent implements OnInit {
       this.indentations = Array(this.comment.level)
         .fill(0)
         .map((x, i) => i);
+
+      this.vote = this.comment.myVote;
+    }
+
+    if (this.vote === 1 && this.comment) {
+      this.comment.upvotes--;
+    }
+
+    if (this.vote === -1 && this.comment) {
+      this.comment.downvotes--;
     }
   }
 
@@ -30,14 +40,16 @@ export class CommentComponent implements OnInit {
   @Output() onCreateComment: EventEmitter<any> = new EventEmitter();
   indentations: number[] = [];
   showReplyBox: boolean = false;
+  @Output() onVoteComment: EventEmitter<any> = new EventEmitter();
+  vote: number = 0;
 
   getTimeAgo(date: number): string {
     return moment(date).fromNow();
   }
 
-  getNextComments(postId: string, parentId: string, isFirstRun: boolean): void {
+  getNextComments(postId: string, parentId: string): void {
     if (this.comment) this.comment.isChildrenRevealed = true;
-    this.onGetNextComments.emit({ postId, parentId, isFirstRun });
+    this.onGetNextComments.emit({ postId, parentId });
   }
 
   toggleReply(): void {
@@ -48,16 +60,31 @@ export class CommentComponent implements OnInit {
     this.onCreateComment.emit(event);
   }
 
-  voteComment(vote: number) {
+  voteComment(vote: number): void {
+    if (this.vote === vote) {
+      this.vote = 0;
+    } else {
+      this.vote = vote;
+    }
+    
     if (this.comment && this.user) {
       const postId = this.comment.postId;
       const commentId = this.comment.id;
       const userId = this.user.id;
-      this._commentsService
-        .voteComment(postId, commentId, userId, vote)
-        .subscribe((data) => {
-          console.log(data);
-        });
+      this.onVoteComment.emit({ postId, commentId, userId, vote });
     }
   }
+
+  // voteComment(vote: number) {
+  //   if (this.comment && this.user) {
+  //     const postId = this.comment.postId;
+  //     const commentId = this.comment.id;
+  //     const userId = this.user.id;
+  //     this._commentsService
+  //       .voteComment(postId, commentId, userId, vote)
+  //       .subscribe((data) => {
+  //         console.log(data);
+  //       });
+  //   }
+  // }
 }

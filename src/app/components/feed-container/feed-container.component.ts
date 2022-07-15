@@ -4,6 +4,7 @@ import { Post } from 'src/app/models/post.model';
 import { Subreddit } from 'src/app/models/subreddit.model';
 import { SubredditsService } from 'src/app/services/subreddits.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/user.model';
 
 @Component({
   selector: 'app-feed-container',
@@ -24,19 +25,22 @@ export class FeedContainerComponent implements OnInit {
 
   posts: Post[] = [];
   isLogin: boolean = this._auth.isLogin;
+  loggedInUser?: User = this._auth.loggedInUser;
   recentSubreddits: Subreddit[] = [];
   page: number = 1;
 
-  getAllPosts(): void {
-    this.postsService.getAllPosts().subscribe((posts) => {
-      this.posts = posts;
-    });
-  }
+  // getAllPosts(): void {
+  //   this.postsService.getAllPosts().subscribe((posts) => {
+  //     this.posts = posts;
+  //   });
+  // }
 
   getAllPostsUsingPagination(): void {
+    const userId = this.loggedInUser ? this.loggedInUser.id : 'xxx';
     this.postsService
-      .getAllPostsUsingPagination(String(this.page), '10')
+      .getAllPostsUsingPagination(String(this.page), '10', userId)
       .subscribe((posts) => {
+        console.log(posts);
         this.posts = this.posts.concat(posts);
       });
   }
@@ -48,7 +52,7 @@ export class FeedContainerComponent implements OnInit {
   }
 
   onScroll() {
-    console.log("GETTING NEW PAGE")
+    console.log('GETTING NEW PAGE');
     this.page++;
     this.getAllPostsUsingPagination();
   }

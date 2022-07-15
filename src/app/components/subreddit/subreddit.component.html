@@ -7,14 +7,17 @@
   (scrolled)="onScroll()"
 >
   <div class="row">
-    <div class="col-12 col-lg-8 d-flex flex-column gap-4">
-      <div *ngIf="isLogin" class="card p-4">
+    <div class="col-12 col-lg-8 d-flex flex-column gap-4 order-2 order-lg-1">
+      <div *ngIf="isLogin" class="card p-4 mt-4 mt-lg-0">
         <app-create-post-cta></app-create-post-cta>
       </div>
       <app-posts-list [posts]="posts"></app-posts-list>
       <div class="card p-4"><p class="m-0">You've reached the end!</p></div>
     </div>
-    <div class="d-none col-4 d-lg-flex flex-column gap-4" *ngIf="subreddit">
+    <div
+      class="col-12 col-lg-4 d-flex flex-column gap-4 order-1 order-lg-2"
+      *ngIf="subreddit"
+    >
       <div class="card">
         <div class="header"></div>
 

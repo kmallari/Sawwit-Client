@@ -5,6 +5,9 @@
     routerLink="/s/{{ post.subreddit }}/{{ post.id }}"
     class="post-card"
   >
-    <app-post-card [postData]="post"></app-post-card>
+    <app-post-card
+      [postData]="post"
+      (onVotePost)="votePost($event)"
+    ></app-post-card>
   </li>
 </ul>

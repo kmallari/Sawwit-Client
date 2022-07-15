@@ -29,13 +29,13 @@
           <div class="d-flex justify-content-between align-items-center pt-2">
             <div class="d-flex flex-row align-items-center gap-2">
               <button class="vote-btn" (click)="voteComment(1)">
-                <i class="bi bi-caret-up-fill"></i>
+                <i class="bi bi-caret-up-fill {{ vote === 1 ? 'upvoted' : '' }}"></i>
               </button>
               <span class="vote-count">{{
-                comment.upvotes - comment.downvotes
+                comment.upvotes - comment.downvotes + vote
               }}</span>
               <button class="vote-btn" (click)="voteComment(-1)">
-                <i class="bi bi-caret-down-fill"></i>
+                <i class="bi bi-caret-down-fill {{ vote === -1 ? 'downvoted' : '' }}"></i>
               </button>
 
               <button
@@ -71,7 +71,7 @@
         comment.childrenCount !== 0 &&
         comment.isChildrenRevealed === undefined
       "
-      (click)="getNextComments(comment.postId, comment.id, false)"
+      (click)="getNextComments(comment.postId, comment.id)"
       class="reveal-comments-btn"
     >
       Show {{ comment.childrenCount }} replies

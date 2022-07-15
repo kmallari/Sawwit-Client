@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   clearStorage() {
-    this.cookieService.deleteAll("*");
+    this.cookieService.deleteAll('*');
   }
 
   isUserLoggedIn() {

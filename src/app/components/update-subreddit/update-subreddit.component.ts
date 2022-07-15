@@ -71,7 +71,7 @@ export class UpdateSubredditComponent implements OnInit {
       this._subredditService
         .updateSubreddit(this.subredditName, fieldsToUpdate)
         .subscribe((data) => {
-          this.resetFileInput();
+          // this.resetFileInput();
           window.location.reload();
         });
     }

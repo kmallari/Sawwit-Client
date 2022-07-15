@@ -6,6 +6,7 @@
         *ngIf="postData"
         [postData]="postData"
         [revealFullContent]="true"
+        (onVotePost)="votePost($event)"
       ></app-post-card>
       <app-comments-container [postId]="postData.id"></app-comments-container>
     </div>

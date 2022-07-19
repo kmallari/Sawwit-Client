@@ -29,6 +29,9 @@ import { CreatePostCtaComponent } from './components/create-post-cta/create-post
 import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component';
 import { UpdateSubredditComponent } from './components/update-subreddit/update-subreddit.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { ChatSidebarComponent } from './components/chat-sidebar/chat-sidebar.component';
+import { ChatMessagesComponent } from './components/chat-messages/chat-messages.component';
+import { StartChatComponent } from './components/start-chat/start-chat.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
 
@@ -54,6 +57,9 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
     UpdateUserProfileComponent,
     UpdateSubredditComponent,
     ChatComponent,
+    ChatSidebarComponent,
+    ChatMessagesComponent,
+    StartChatComponent,
   ],
   imports: [
     BrowserModule,

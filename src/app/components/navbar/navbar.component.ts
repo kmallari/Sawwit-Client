@@ -43,7 +43,6 @@ export class NavbarComponent implements OnInit {
     callback: (token: string) => {};
     errorCallback: (error: Error) => {};
   }) {
-    console.log('EVENT', event);
     this._usersService
       .login(event.loginForm.value.loginInfo, event.loginForm.value.password)
       .subscribe(

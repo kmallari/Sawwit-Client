@@ -81,17 +81,14 @@
           </div>
           <div *ngIf="isLogin && user">
             <li>
-              <button class="dropdown-item" routerLink="/u/{{ user.id }}">
-                My profile
-              </button>
+              <a routerLink="/u/{{ user.id }}">
+                <button class="dropdown-item">My profile</button>
+              </a>
             </li>
             <li>
-              <button
-                class="dropdown-item"
-                routerLink="/u/{{ user.id }}/update"
-              >
-                Update profile
-              </button>
+              <a routerLink="/u/{{ user.id }}/update">
+                <button class="dropdown-item">Update profile</button>
+              </a>
             </li>
             <li>
               <button class="dropdown-item" (click)="logout()">Log out</button>

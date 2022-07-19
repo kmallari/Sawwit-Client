@@ -1,0 +1,20 @@
+<div class="col-sm">
+  <h3>Messages in Room {{ roomId }}</h3>
+  <hr />
+  <!-- SENDING NEW MESSAGE -->
+  <form action="">
+    <input
+      [(ngModel)]="newMessage"
+      type="text"
+      [ngModelOptions]="{ standalone: true }"
+    /><button (click)="sendMessage(roomId)">SEND</button>
+  </form>
+</div>
+
+<ul>
+  <h6>list of messages</h6>
+  <!-- {{ roomMessages[0].message}} -->
+  <li *ngFor="let message of roomMessages">
+    {{ message.message }} by {{ message.senderUsername }}
+  </li>
+</ul>

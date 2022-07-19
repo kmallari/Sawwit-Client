@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex flex-row gap-1">
+      <button>Your rooms</button>
+      <button>Invitations</button>
+    </div>
+    <button routerLink="/chat">+</button>
+  </div>
+  <ul>
+    <li *ngFor="let room of roomsUserIsIn">
+      <button routerLink="/chat/{{ room.id }}">{{ room.id }}</button>
+    </li>
+  </ul>
+</div>

@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Message } from '../models/message.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,7 +15,15 @@ export class ChatService {
     return throwError(() => error);
   }
 
-  message$: BehaviorSubject<string> = new BehaviorSubject('');
+  message$: BehaviorSubject<Message> = new BehaviorSubject({
+    id: '',
+    senderId: '',
+    senderUsername: '',
+    senderProfilePicture: '',
+    roomId: '',
+    message: '',
+    createdAt: 0,
+  });
   private url = 'http://localhost:8080/chat';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -24,18 +33,30 @@ export class ChatService {
   //   this.socket.emit('message', message);
   // }
 
-  sendMessage = (message: string) => {
-    this.socket.emit('sendMessage', 'URFaZhdCy2MBh7OAc9YeT', message);
+  getRoomMessages = (roomId: string, start: number, limit: number) => {
+    return this.http
+      .get(`${this.url}/messages/${roomId}?start=${start}&limit=${limit}`)
+      .pipe(catchError(this.handleError));
+  };
+
+  sendMessage = (user: User, roomId: string, message: string) => {
+    this.socket.emit('sendMessage', user, roomId, message);
   };
 
   getNewMessage = () => {
     console.log('GETTING NEW MESSAGE');
 
-    this.socket.on('receiveMessage', (message: string) => {
+    this.socket.on('receiveMessage', (message: Message) => {
       this.message$.next(message);
     });
 
     return this.message$.asObservable();
+  };
+
+  getRoomsUserIsIn = (userId: string) => {
+    return this.http
+      .get(`${this.url}/rooms/${userId}?start=0&limit=10`)
+      .pipe(catchError(this.handleError));
   };
 
   createRoom = (users: User[]): Observable<any> => {
@@ -56,7 +77,7 @@ export class ChatService {
       );
   };
 
-  joinRoom = (roomId: string) => {
-    this.socket.emit('joinRoom', roomId);
+  joinRoom = (userId: string, roomId: string) => {
+    this.socket.emit('joinRoom', userId, roomId);
   };
 }

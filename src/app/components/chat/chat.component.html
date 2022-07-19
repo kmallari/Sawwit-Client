@@ -1,54 +1,50 @@
+<div class="container row m-auto">
+  <app-chat-sidebar class="col-4 bg-primary"></app-chat-sidebar>
+  <app-chat-messages
+    *ngIf="roomId"
+    class="col-8 bg-warning"
+  ></app-chat-messages>
+  <app-start-chat *ngIf="!roomId" class="col-8 bg-info"></app-start-chat>
+</div>
+
+<!-- FORMER CODE -->
 <div class="container row">
-  <div class="col-sm">
-    <!-- SEARCHING FOR USERS SECTION -->
-    <h3>Search for users to message</h3>
-    <input
-      type="text"
-      placeholder="search users"
-      #searchBox
-      (input)="search(searchBox.value)"
-    />
-
-    <button
-      *ngFor="let user of searchedUsers"
-      (click)="addToGroup(user); addToUsersToMessage(user)"
-    >
-      {{ user.username }}
-    </button>
-
-    <!-- LISTING DOWN THE USERS TO MESSAGE -->
-    <h2>Users to message</h2>
-    <ul>
-      <li *ngFor="let user of usersToMessage">{{ user.username }}</li>
-    </ul>
-
-    <!-- CREATE ROOM BTN -->
-    <button (click)="createRoom()">Create Room</button>
-    <!-- CREATE ROOM BTN -->
-
-    <h3>Input message here</h3>
-
-    <!-- SENDING NEW MESSAGE -->
-    <form action="">
+  <div>
+    <div class="col-sm">
+      <!-- SEARCHING FOR USERS SECTION -->
+      <h3>Search for users to message</h3>
       <input
-        [(ngModel)]="newMessage"
         type="text"
-        [ngModelOptions]="{ standalone: true }"
-      /><button (click)="sendMessage()">SEND</button>
-    </form>
-    <div *ngFor="let message of messageList">
-      <li>
-        {{ message }}
-      </li>
+        placeholder="search users"
+        #searchBox
+        (input)="search(searchBox.value)"
+      />
+
+      <button
+        *ngFor="let user of searchedUsers"
+        (click)="addToGroup(user); addToUsersToMessage(user)"
+      >
+        {{ user.username }}
+      </button>
+      <!-- LISTING DOWN THE USERS TO MESSAGE -->
+      <h2>Users to message</h2>
+      <ul>
+        <li *ngFor="let user of usersToMessage">{{ user.username }}</li>
+      </ul>
+      <hr />
+
+      <!-- CREATE ROOM BTN -->
+      <button (click)="createRoom()">Create Room</button>
+      <!-- CREATE ROOM BTN -->
     </div>
-  </div>
-  <div class="col-sm">
-    <!-- JOIN ROOM -->
-    <input
-      [(ngModel)]="roomIdInput"
-      type="text"
-      placeholder="enter room id here to join room"
-    />
-    <button (click)="joinRoom()">JOIN ROOM</button>
+    <div class="col-sm">
+      <!-- JOIN ROOM -->
+      <input
+        [(ngModel)]="roomIdInput"
+        type="text"
+        placeholder="enter room id here to join room"
+      />
+      <!-- <button (click)="joinRoom()">JOIN ROOM</button> -->
+    </div>
   </div>
 </div>

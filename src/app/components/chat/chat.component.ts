@@ -5,6 +5,9 @@ import { UsersService } from 'src/app/services/users.service';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
+import { Room } from '../../models/room.model';
+import { Message } from 'src/app/models/message.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -15,13 +18,11 @@ export class ChatComponent implements OnInit {
   constructor(
     private _chatService: ChatService,
     private _usersService: UsersService,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this._chatService.getNewMessage().subscribe((message: string) => {
-      this.messageList.push(message);
-    });
     this.searchTerms
       .pipe(
         // wait 300ms after each keystroke before considering the term
@@ -33,11 +34,15 @@ export class ChatComponent implements OnInit {
       .subscribe((term) => {
         this.getSearched(term);
       });
+
+    this.roomId = this._route.snapshot.params['roomId'];
+    if (this.roomId) {
+      this.joinRoom(this.roomId);
+    }
   }
 
   // FOR TESTING
-  newMessage: string = '';
-  messageList: string[] = [];
+  // messageList: string[] = [];
   // END OF FOR TESTING
 
   searchedUsers: User[] = [];
@@ -46,13 +51,14 @@ export class ChatComponent implements OnInit {
   loggedInUser?: User = this._auth.loggedInUser;
   usersInGroup: User[] = this.loggedInUser ? [this.loggedInUser] : [];
   roomIdInput: string = '';
+  roomsUserIsIn: Room[] = [];
+  roomId: string = '';
 
   search(term: string): void {
     this.searchTerms.next(term);
   }
 
   getSearched(term: string): void {
-    console.log('HELP');
     if (term) {
       this._usersService.searchUser(term).subscribe((users) => {
         this.searchedUsers = users;
@@ -60,18 +66,8 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  sendMessage = () => {
-    console.log(
-      '🚀 ~ file: feed-container.component.ts ~ line 71 ~ FeedContainerComponent ~ sendMessage ~ this.newMessage',
-      this.newMessage
-    );
-    this._chatService.sendMessage(this.newMessage);
-    this.newMessage = '';
-  };
-
   addToUsersToMessage(user: User) {
     this.usersToMessage.push(user);
-    console.log(this.usersToMessage);
   }
 
   addToGroup(user: User) {
@@ -82,7 +78,7 @@ export class ChatComponent implements OnInit {
     console.log('Hello?');
     this._chatService.createRoom(this.usersInGroup).subscribe(
       (res: any) => {
-        console.log(res);
+        // console.log(res);
       },
       (err: any) => {
         console.error(err);
@@ -90,7 +86,8 @@ export class ChatComponent implements OnInit {
     );
   }
 
-  joinRoom() {
-    this._chatService.joinRoom(this.roomIdInput);
+  joinRoom(roomToJoin: string) {
+    if (this.loggedInUser)
+      this._chatService.joinRoom(this.loggedInUser.id, roomToJoin);
   }
 }

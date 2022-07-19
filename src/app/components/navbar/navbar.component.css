@@ -111,3 +111,6 @@ nav {
   backdrop-filter: blur(2px);
   background-color: rgba(37, 37, 37, 0.4);
 }
+a {
+  text-decoration: none;
+}

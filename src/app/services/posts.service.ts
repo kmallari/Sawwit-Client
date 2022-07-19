@@ -1,26 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { User, RegisteredUser, LoginUser } from '../models/user.model';
 import { SubredditsService } from './subreddits.service';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { Post } from '../models/post.model';
-import { Subreddit } from '../models/subreddit.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostsService {
-  private url = 'http://localhost:8080/posts';
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
-  imageUploadHeader = {
-    headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }),
-  };
   constructor(
-    private http: HttpClient,
-    private subredditsService: SubredditsService
+    private http: HttpClient
   ) {}
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -38,14 +28,10 @@ export class PostsService {
     };
   }
 
-  // getAllPosts(): Observable<Post[]> {
-  //   return this.http.get<Post>(this.url).pipe(
-  //     tap((_) => {
-  //       // console.log(_);
-  //     }),
-  //     catchError(this.handleError<any>('getAllPosts'))
-  //   );
-  // }
+  private url = 'http://localhost:8080/posts';
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
 
   getAllPostsUsingPagination(
     page: string,

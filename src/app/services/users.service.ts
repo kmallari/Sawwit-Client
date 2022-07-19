@@ -107,4 +107,14 @@ export class UsersService {
         catchError(this.handleError)
       );
   };
+
+  searchUser = (username: string): Observable<User[]> => {
+    if (!username.trim()) {
+      return of([]);
+    }
+    return this.http.get<User[]>(
+      this.url + `/search?searchTerm=${username}`,
+      this.httpOptions
+    );
+  };
 }

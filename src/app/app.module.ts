@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarLeftComponent } from './components/sidebar-left/sidebar-left.component';
 import { CreateSubredditComponent } from './components/create-subreddit/create-subreddit.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PostsListComponent } from './components/posts-list/posts-list.component';
 import { PostCardComponent } from './components/post-card/post-card.component';
 import { FeedContainerComponent } from './components/feed-container/feed-container.component';
 import { SubmitPostComponent } from './components/submit-post/submit-post.component';
 import { AutosizeModule } from 'ngx-autosize';
-import { InfiniteScrollModule } from "ngx-infinite-scroll";
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { PostComponent } from './components/post/post.component';
 import { SubredditComponent } from './components/subreddit/subreddit.component';
 import { UserComponent } from './components/user/user.component';
@@ -27,6 +28,10 @@ import { MakeCommentComponent } from './components/make-comment/make-comment.com
 import { CreatePostCtaComponent } from './components/create-post-cta/create-post-cta.component';
 import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component';
 import { UpdateSubredditComponent } from './components/update-subreddit/update-subreddit.component';
+import { ChatComponent } from './components/chat/chat.component';
+
+const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,16 +53,19 @@ import { UpdateSubredditComponent } from './components/update-subreddit/update-s
     CreatePostCtaComponent,
     UpdateUserProfileComponent,
     UpdateSubredditComponent,
+    ChatComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     AutosizeModule,
     InfiniteScrollModule,
     CKEditorModule,
     AuthModule,
+    SocketIoModule.forRoot(config),
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

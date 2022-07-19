@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Post } from 'src/app/models/post.model';
-import { PostsService } from 'src/app/services/posts.service';
+// import { PostsService } from 'src/app/services/posts.service';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user.model';

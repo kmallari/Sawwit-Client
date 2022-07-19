@@ -24,6 +24,9 @@
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 90px;
 }
 
 .no-clip {
@@ -113,6 +116,7 @@
   border-radius: 0.4em;
   height: 80px;
   width: 80px;
+  /* top: -60px; */
 }
 
 .image-in-preview {
@@ -126,8 +130,7 @@
 }
 
 .image-in-preview:hover {
-  outline: 3px solid var(--light-primary);
-
+  outline: 4px solid var(--light-primary);
 }
 
 .link-icon {

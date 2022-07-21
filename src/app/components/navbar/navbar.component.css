@@ -114,3 +114,17 @@ nav {
 a {
   text-decoration: none;
 }
+
+.chat-btn {
+  font-size: 0.8em;
+  border: 1px solid var(--dark-secondary);
+  border-radius: 0.4em;
+  padding: 0.66em;
+  color: var(--light-secondary);
+}
+
+.chat-btn:hover {
+  background-color: var(--dark-secondary);
+  border: 1px solid var(--dark-hover);
+  color: var(--secondary);
+}

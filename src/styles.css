@@ -10,7 +10,7 @@
   --dark-secondary: #333333;
   --dark-hover: #414141;
   --light-primary: #ffffff;
-  --light-secondary: #c1c1c1;
+  --light-secondary: #a7a7a7;
 }
 
 body {
@@ -202,4 +202,46 @@ textarea {
 
 .image-preview {
   top: -60px;
+}
+
+.no-overflow {
+  overflow: hidden;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.chat-sidebar {
+  margin-top: -48px;
+  height: calc(100vh - 80px);
+  width: 100%;
+}
+
+@media only screen and (min-width: 991px) {
+  .chat-sidebar {
+    display: flex;
+    flex-direction: row;
+    margin-top: -60px;
+    min-width: 320px;
+    max-width: 320px;
+  }
+}
+
+textarea,
+input {
+  resize: none;
+  background-color: var(--dark-secondary);
+  border: none;
+  color: var(--light-secondary);
+}
+
+textarea:focus,
+input:focus {
+  background-color: var(--dark-secondary);
+  box-shadow: 0 0 0 1px var(--secondary);
+  color: var(--light-secondary);
+  border: none;
+  outline: none;
 }

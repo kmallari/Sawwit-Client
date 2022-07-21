@@ -3,6 +3,6 @@ export interface Room {
   name: string;
   numberOfParticipants: number;
   roomImage: string;
-  updatedAt: string;
-  createdAt: string;
+  updatedAt: number;
+  createdAt: number;
 }

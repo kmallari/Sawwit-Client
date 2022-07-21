@@ -32,6 +32,7 @@ import { ChatComponent } from './components/chat/chat.component';
 import { ChatSidebarComponent } from './components/chat-sidebar/chat-sidebar.component';
 import { ChatMessagesComponent } from './components/chat-messages/chat-messages.component';
 import { StartChatComponent } from './components/start-chat/start-chat.component';
+import { ChatRightbarComponent } from './components/chat-rightbar/chat-rightbar.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
 
@@ -60,6 +61,7 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
     ChatSidebarComponent,
     ChatMessagesComponent,
     StartChatComponent,
+    ChatRightbarComponent,
   ],
   imports: [
     BrowserModule,

@@ -95,3 +95,25 @@ a:hover {
 .bi-x-circle:hover {
   color: var(--secondary);
 }
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--dark-secondary);
+  border-radius: 100em;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(99, 99, 99);
+  border-radius: 1em;
+  transition: all 0.1s ease-in-out;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(139, 139, 139);
+}

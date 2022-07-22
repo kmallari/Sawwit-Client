@@ -6,6 +6,7 @@ import { Invite } from '../../models/invitate.model';
 import { AuthService } from '../../services/auth.service';
 import { ChatService } from '../../services/chat.service';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-chat-sidebar',
@@ -17,7 +18,8 @@ export class ChatSidebarComponent implements OnInit {
     private _auth: AuthService,
     private _chatService: ChatService,
     private _route: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private _toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +73,12 @@ export class ChatSidebarComponent implements OnInit {
           );
         });
     this.removeFromInvitations(roomId);
+    this._toastr.success(
+      `You have successfully ${
+        accept ? 'accepted' : 'rejected'
+      } the invitation!`,
+      'Successfully responded!'
+    );
   };
 
   handleTabChange = (tab: string) => {

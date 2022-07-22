@@ -19,7 +19,7 @@ textarea {
 }
 
 .send-btn {
-  color: var(--primary);
+  color: var(--secondary);
   background-color: var(--dark-secondary);
   border-radius: 0.4em;
   box-shadow: none;

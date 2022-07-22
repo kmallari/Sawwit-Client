@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-/* @import '~quill/dist/quill.bubble.css';  */
+@import "~ngx-toastr/toastr";
 
 :root {
   --primary: #c83e4d;

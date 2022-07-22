@@ -15,7 +15,7 @@ export class FeedContainerComponent implements OnInit {
   constructor(
     private postsService: PostsService,
     private _subredditsService: SubredditsService,
-    private _auth: AuthService
+    private _auth: AuthService,
   ) {}
 
   ngOnInit(): void {

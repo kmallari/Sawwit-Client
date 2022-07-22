@@ -7,6 +7,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { Room } from 'src/app/models/room.model';
 import { ChatService } from 'src/app/services/chat.service';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-chat-rightbar',
@@ -18,7 +19,8 @@ export class ChatRightbarComponent implements OnInit {
     private _auth: AuthService,
     private _usersService: UsersService,
     private _chatService: ChatService,
-    private _route: ActivatedRoute
+    private _route: ActivatedRoute,
+    private _toastr: ToastrService
   ) {
     this.roomId = this._route.snapshot.params['roomId'];
   }
@@ -93,6 +95,10 @@ export class ChatRightbarComponent implements OnInit {
           }
         );
     this.usersInGroup = [];
+    this._toastr.success(
+      `The user/s have been successfully invited to the room. Please wait for their response.`,
+      'Successfully invited!'
+    );
   };
 
   changeRoomName = () => {

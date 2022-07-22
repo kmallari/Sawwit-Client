@@ -33,6 +33,8 @@ import { ChatSidebarComponent } from './components/chat-sidebar/chat-sidebar.com
 import { ChatMessagesComponent } from './components/chat-messages/chat-messages.component';
 import { StartChatComponent } from './components/start-chat/start-chat.component';
 import { ChatRightbarComponent } from './components/chat-rightbar/chat-rightbar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
 
@@ -74,6 +76,8 @@ const config: SocketIoConfig = { url: 'http://localhost:8080', options: {} };
     CKEditorModule,
     AuthModule,
     SocketIoModule.forRoot(config),
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],

@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
   host: {
-    class: 'w-100',
+    class: 'w-100 ',
   },
 })
 export class ChatComponent implements OnInit, OnDestroy {
@@ -24,6 +24,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     private _renderer: Renderer2
   ) {
     this._renderer.addClass(document.body, 'no-overflow');
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   }
 
   ngOnInit(): void {
